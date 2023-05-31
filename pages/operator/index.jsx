@@ -1,6 +1,5 @@
   import { useEffect, useState } from "react";
-import OperatorPage from "@/components/OperatorPage/OperatorPage";
-import MyApplications from "@/components/OperatorPage/OperatorPage";
+import AllApplications from "@/components/OperatorPage/AllApplications";
 
 const Operator = () => {
   const [userInfo, setUserInfo] = useState(null);
@@ -11,7 +10,7 @@ const Operator = () => {
   return (
     <>
       {userInfo 
-      ? <MyApplications />
+      ? <AllApplications />
       : ""}
     </>
   );

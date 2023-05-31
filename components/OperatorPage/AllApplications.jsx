@@ -36,7 +36,7 @@ const AllApplications = () => {
       title: 'Действие',
       key: 'action',
       render: (text, record) => (
-        <MyBtn type="primary">Назначить бригаду</MyBtn>
+        <MyBtn type="primary">Взяться за работу</MyBtn>
       ),
     },
   ];
