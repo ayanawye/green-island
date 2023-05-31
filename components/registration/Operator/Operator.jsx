@@ -3,6 +3,7 @@ import { Form, Input, Button, Checkbox } from "antd";
 import { useFormik } from "formik";
 import axios from "axios";
 import { BASE_URL } from "@/base_url/BASE_URL";
+import { teamRegistration } from "@/requests/RegistLogin";
 
 const OperatorRegist = () => {
   const [userInfo, setUserInfo] = useState(null)
@@ -24,16 +25,7 @@ const OperatorRegist = () => {
       user_type: "",
     },
     onSubmit: async (values) => {
-      console.log(values);
-      try {
-        const resp = await axios.post(`${BASE_URL}/operators/register/`, values, {
-          headers: {
-            'Authorization': `Bearer ${token}` }
-        });
-        console.log(resp);
-      } catch (e) {
-        console.log(e);
-      }
+      teamRegistration(`${BASE_URL}/operators/register/`, values, token, formik.resetForm)
     },
     validate: (values) => {
       const errors = {};

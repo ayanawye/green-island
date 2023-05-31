@@ -56,3 +56,36 @@ export const authRequests = async (endpoint, bodyObj, router) => {
     });
   }
 };
+
+export const teamRegistration = async(endpoint, bodyObj, token, funk) => {
+  try {
+    await axios.post(endpoint, bodyObj,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    message.open({
+      type: "success",
+      content: "Регистрация прошла успешно!",
+      style: {
+        marginTop: "5%",
+        fontSize: "20px",
+      },
+    })
+    setTimeout(() => {
+      funk()
+    }, 2000)
+  } 
+  catch (e) {
+    message.open({
+      type: "error",
+      content: "Пользователь с такой почтoй уже существует",
+      style: {
+        marginTop: "5%",
+        fontSize: "20px",
+      },
+    })
+  }
+}
