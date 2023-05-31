@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Input, Button, Checkbox, message } from "antd";
 import { useFormik } from "formik";
 import axios from "axios";
 import { BASE_URL } from "@/base_url/BASE_URL";
+import { teamRegistration } from "@/requests/RegistLogin";
 
 const BrigadeRegist = () => {
   const [token, setToken] = useState(null)
+  useEffect(() => {
+    const resp = JSON.parse(localStorage.getItem("userInfo"))
+    const access = resp.access
+    setToken(access)
+  }, [])
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -15,39 +22,8 @@ const BrigadeRegist = () => {
       brigades_list: "",
       user_type: "",
     },
-    onSubmit: async (values) => {
-      console.log(values);
-      try {
-        const resp = await axios.post(
-          `${BASE_URL}/brigades/register/`,
-          values,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        const access = resp.access;
-        setToken(access);
-        message.open({
-          type: "success",
-          content: "Регистрация прошла успешно!",
-          style: {
-            marginTop: "5%",
-            fontSize: "20px",
-          },
-        })
-      } 
-      catch (e) {
-        message.open({
-          type: "error",
-          content: "Пользователь с такой почтoй уже существует",
-          style: {
-            marginTop: "5%",
-            fontSize: "20px",
-          },
-        })
-      }
+    onSubmit: (values) => {
+      teamRegistration(`${BASE_URL}/brigades/register/`, values, token, formik.resetForm)
     },
     validate: (values) => {
       const errors = {};
