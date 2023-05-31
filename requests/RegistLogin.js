@@ -1,6 +1,5 @@
 import { message } from "antd";
 import axios from "axios";
-import { headers } from "next/dist/client/components/headers";
 
 export const postRegistRequests = async (endpoint, bodyObj, router) => {
   try {
@@ -46,7 +45,6 @@ export const authRequests = async (endpoint, bodyObj, router) => {
       return router.push("/operator");
     }
   } catch (e) {
-    console.log("click");
     console.log(e);
     message.open({
       type: "error",
