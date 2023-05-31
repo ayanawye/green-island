@@ -5,8 +5,8 @@ import s from './Header.module.scss';
 
 const OperatorHeader = () => {
   const operatorNavigation = [
-    { id: 2, title: "Мои заявки", path: "/operator" },
-    { id: 1, title: "Все заявки", path: "/operator/applications" },
+    { id: 2, title: "Все заявки", path: "/operator" },
+    { id: 1, title: "Мои заявки", path: "/operator/myapplications" },
     { id: 3, title: "Список бригад", path: "/operator/brig" },
     { id: 4, title: "Регистрация", path: "/operator/teamregist" },
   ];
