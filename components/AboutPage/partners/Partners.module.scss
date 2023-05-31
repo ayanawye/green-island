@@ -1,0 +1,29 @@
+@import "../../../styles/variables";
+
+.partners{
+  padding: 4% 0 7%;
+  background-color: $background-green;
+}
+.container{
+  @include container;
+}
+.slider {
+  padding-left: 10% !important;
+}
+.card{
+  max-width: 60%;
+  height: 60%;
+}
+.name{
+  @extend .section-name;
+  color: $white-color;
+}
+
+.title{
+  @include mid-title;
+  color: $white-color;
+  margin: 2% 0 6%;
+}
+.image{
+  @extend .image-size;
+}

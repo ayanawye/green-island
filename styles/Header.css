@@ -1,0 +1,50 @@
+.ant-select-selector{
+  border: 1px solid #215700 !important;
+  font-size: 22px !important;
+  line-height: 35px;
+}
+.ant-space{
+  display: flex;
+  justify-content: space-between;
+}
+.ant-table-content > table{
+  table-layout: initial !important;
+}
+.ant-btn-default{
+  border-color: none;
+}
+.ant-btn-default:not(:disabled):active{
+  border-color: #215700;
+  color: #215700;
+}
+.ant-btn-default:not(:disabled):hover{
+  border-color: #215700;
+  color: #215700;
+}
+.ant-btn-default:not(:disabled):focus{
+  border-color: #215700;
+  color: #215700;
+}
+.ant-table-cell{
+  padding: 1.5%;
+}
+@media (max-width: 800px) {
+  .ant-table-cell:nth-child(4){
+    display: none;
+  }
+}
+.ant-input:hover {
+  border-color: #215700;
+}
+.ant-btn-primary{
+  background-color: #215700;
+}
+.ant-input:focus{
+  border-color: #215700;
+}
+.ant-modal-confirm-body>.anticon {
+  color: #215700 !important;
+}
+.ant-btn-primary:not(:disabled):hover{
+  background-color: #55b916;
+}

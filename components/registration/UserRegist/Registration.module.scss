@@ -1,0 +1,58 @@
+@import "../../../styles/variables";
+
+.regist {
+  height: 100vh;
+  width: 100%;
+  background: url("../../../assets/images/regist-bg.png") no-repeat center/cover;
+}
+.reg_container {
+  width: 30%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.image{
+  width: 50%;
+  height: 10%;
+  .img{
+    @extend .image-size;
+  }
+}
+.form{
+  margin-top: 5%;
+  padding-top: 2%;
+  height: 80%;
+  width: 100%;
+  text-align: center;
+  border-radius: 40px;
+  border: 1px solid #ffffff;
+  background: rgba(255, 255, 255, 0.2);
+}
+.title{
+  @include small-title;
+  color: $light-color;
+  margin-bottom: 4%;
+}
+.formik{
+  height: 100%;
+}
+.input{
+  height: 8%;
+  margin-bottom: 4%;
+}
+.btn{
+  width: 60%;
+  height: 10%;
+  @extend .center;
+}
+.link{
+  margin-top: 2%;
+  .login{
+    color: $accent-color;
+    cursor: pointer;
+    @include little-description;
+  }
+}

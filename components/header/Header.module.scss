@@ -1,0 +1,44 @@
+@import "../../styles/variables";
+
+.header {
+  height: 100px;
+  background-color: #fff;
+  color: #000;
+  font-size: 21px;
+}
+.container {
+  @include container;
+  height: 100%;
+}
+.btn {
+  width: 150px;
+  height: 60px;
+}
+.content {
+  // @extend .flex-aling;
+  height: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.flex{
+  @extend .flex-aling;
+  column-gap: 10%;
+}
+.image{
+  width: 170px;
+  height: 60px;
+  .img{
+    @extend .image-size;
+  }
+}
+.link {
+  margin-right: 35px;
+  transition: 0.3s;
+}
+.active {
+  border-bottom: 1px solid $accent-color;
+  transition: 0.3s;
+  font-weight: 500;
+  margin-right: 35px;
+}

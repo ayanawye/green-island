@@ -1,0 +1,14 @@
+@import "../../../styles/variables";
+
+.text{
+  width: 100%;
+  padding: 2% 4%;
+}
+.left{
+  @include big-text;
+  justify-content: flex-start;
+}
+.right{
+  @include big-text;
+  justify-content: flex-end;
+}

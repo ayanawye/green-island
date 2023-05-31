@@ -1,0 +1,17 @@
+@import "../../../styles/variables";
+
+.service {
+  padding: 74px 0;
+  background-color: $white-color;
+}
+.container {
+  @include container;
+}
+.title {
+  @include mid-title;
+}
+.desc {
+  @include description;
+  margin: 15px 0 50px;
+}
+

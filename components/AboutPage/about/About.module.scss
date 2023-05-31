@@ -1,0 +1,62 @@
+@import "../../../styles/variables";
+
+.about {
+  padding-top: 4%;
+  color: $black-color;
+}
+.container {
+  @include container;
+  padding-top: 4%;
+}
+.details {
+  @include grid-column2;
+}
+.name {
+  @extend .section-name;
+}
+.title {
+  @include title-style;
+  font-weight: 500;
+  margin: 10% 0 4%;
+  span {
+    color: $accent-color;
+  }
+}
+.desc {
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 58px;
+}
+.image {
+  width: 60%;
+  height: 35%;
+  img {
+    @extend .image-size;
+  }
+}
+.right {
+  padding: 5%;
+}
+.content {
+  display: flex;
+  column-gap: 2%;
+  margin-bottom: 10%;
+  &__title {
+    @include little-description;
+    margin-bottom: 10px;
+  }
+  &__desc {
+    @include little-description;
+  }
+}
+.ball {
+  color: #fff;
+  min-width: 34px;
+  height: 34px;
+  background: $light-color;
+  @include flex-base(center, center);
+  border-radius: 50%;
+}
+.big_text {
+  @include big-text;
+}

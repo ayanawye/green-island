@@ -1,0 +1,40 @@
+@import '../../styles/variables';
+
+.footer{
+  padding: 50px 0;
+}
+.container{
+  @include container;
+}
+.content{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 20px;
+}
+.image{
+  width: 80%;
+  height: 70%;
+  .img{
+    @extend .image-size;
+    object-fit: contain;
+  }
+}
+.nav{
+  margin: 20px 0 0;
+  p{
+    font-weight: 500;
+    @include little-description;
+  }
+  a{
+    display: block;
+    font-weight: 400;
+    @include little-description;
+  }
+}
+.company{
+  display: flex;
+  justify-content: flex-end;
+  @include little-description;
+  font-weight: 400;
+  margin-top: 50px;
+}

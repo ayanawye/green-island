@@ -1,0 +1,44 @@
+@import "../../../styles/variables";
+
+.benefit {
+  padding: 100px 0;
+}
+.container {
+  @include container;
+}
+.content {
+  border: 1px solid $accent-color;
+  position: relative;
+  padding: 70px 100px;
+}
+.text {
+  top: -10px;
+  display: inline-block;
+}
+.title {
+  background-color: $white-color;
+  color: $accent-color;
+  @include small-title;
+  display: inline-block;
+  width: max-content;
+  position: absolute;
+  top: -30px;
+  padding: 0 20px;
+  left: -20px;
+}
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  row-gap: 40px;
+  column-gap: 110px;
+}
+.card {
+  &__title {
+    @include little-description;
+  }
+  &__desc {
+    font-size: 20px;
+    line-height: 29px;
+  }
+}

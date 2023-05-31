@@ -1,0 +1,6 @@
+@import "../../../styles/variables";
+
+.cards {
+  padding: 1%;
+  @include grid-column2;
+}

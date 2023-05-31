@@ -1,0 +1,29 @@
+@import "../../../styles/variables";
+
+
+.product{
+  background-color: $light-color;
+  color: $white-color;
+}
+.text{
+  padding: 0 210px 20px;
+}
+.section__name{
+  @extend .section-name;
+  margin-bottom: 10px;
+}
+.title{
+  @include mid-title;
+}
+.product{
+  padding: 30px 0 60px;
+}
+.img{
+  min-width: 10%;
+  height: 20%;
+  padding: 5%;
+}
+.image{
+  @extend .image-size;
+  object-fit: cover;
+}

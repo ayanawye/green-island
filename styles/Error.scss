@@ -1,0 +1,17 @@
+@import './variables';
+
+.error{
+  width: 100%;
+  height: calc(100vh - 250px);
+  background-color: $background-green;
+  text-align: center;
+  color: $white-color;
+  @include flex-base(center, center);
+  h1{
+    color: $accent-color;
+    @include title-style;
+  }
+  P{
+    @include description;
+  }
+}
