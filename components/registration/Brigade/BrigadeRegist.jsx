@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button, Checkbox, message } from "antd";
 import { useFormik } from "formik";
 import axios from "axios";
 import { BASE_URL } from "@/base_url/BASE_URL";
@@ -29,8 +29,24 @@ const BrigadeRegist = () => {
         );
         const access = resp.access;
         setToken(access);
-      } catch (e) {
-        console.log(e.message);
+        message.open({
+          type: "success",
+          content: "Регистрация прошла успешно!",
+          style: {
+            marginTop: "5%",
+            fontSize: "20px",
+          },
+        })
+      } 
+      catch (e) {
+        message.open({
+          type: "error",
+          content: "Пользователь с такой почтoй уже существует",
+          style: {
+            marginTop: "5%",
+            fontSize: "20px",
+          },
+        })
       }
     },
     validate: (values) => {
