@@ -1,9 +1,8 @@
 import Link from "next/link";
 import MyBtn from "../ui/button/MyBtn";
 import { useRouter } from "next/router";
-import DefaultHeader from "./DefaultHeader";
 import s from './Header.module.scss';
-import { useEffect, useState } from "react";
+import { message } from "antd";
 
 const UserHeader = () => {
   const userNavigation = [
@@ -11,17 +10,30 @@ const UserHeader = () => {
     { id: 2, title: "Для вас", path: "/user/offer" },
     { id: 3, title: "Профиль", path: "/user/profile" },
   ];
-  const { pathname } = useRouter();
+  const router = useRouter();
+  const logOut = () => {
+    localStorage.removeItem("userInfo")
+    message.open({
+      type: "success",
+      content: "Вы вышли с аккаунта",
+      style: {
+        marginTop: "100px"
+      }
+    })
+    setTimeout(() => {
+      router.push("/")
+    }, 1000)
+  }
   return (
     <>
-      {pathname.includes("user") ? (
+      {router.pathname.includes("user") ? (
         <>
           <nav className={s.nav}>
             {userNavigation.map(({ id, path, title }) => (
               <Link
                 href={path}
                 key={id}
-                className={pathname === path ? s.active : s.link}
+                className={router.pathname === path ? s.active : s.link}
               >
                 {title}
               </Link>
@@ -29,7 +41,7 @@ const UserHeader = () => {
           </nav>
           <div className={s.flex}>
             <div className={s.btn}>
-              <MyBtn>
+              <MyBtn onClick={() => logOut()}>
                 <Link href="/">Выйти</Link>
               </MyBtn>
             </div>

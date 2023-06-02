@@ -10,6 +10,8 @@ const Layout = ({ children }) => {
   useEffect(() => {
     if (pathname === "/regist" || pathname === "/login") {
       setShow(false);
+    } else{
+      return setShow(true)
     }
   }, [pathname]);
 

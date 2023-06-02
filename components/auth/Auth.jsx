@@ -1,14 +1,14 @@
-import s from "./Auth.module.scss";
 import { ErrorMessage, Form, Formik } from "formik";
-import * as Yup from "yup";
-import Image from "next/image";
-import MyField from "../ui/input/MyField";
-import Logo from "../../assets/images/logo2.png";
-import MyBtn from "../ui/button/MyBtn";
-import { BASE_URL } from "@/base_url/BASE_URL";
-import { useRouter } from "next/router";
 import { authRequests } from "@/requests/RegistLogin";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import Image from "next/image";
+import * as Yup from "yup";
+import Logo from "../../assets/images/logo2.png";
+import MyField from "../ui/input/MyField";
+import MyBtn from "../ui/button/MyBtn";
+import s from "./Auth.module.scss";
+import { useState } from "react";
+import Loading from "../ui/loading/Loading";
 
 const validationSchema = Yup.object({
   email: Yup.string().email("Не валидная почта").required("Обязательное поле"),
@@ -17,13 +17,14 @@ const validationSchema = Yup.object({
 
 const Auth = () => {
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
   const userValues = {
     email: "",
     password: "",
   }
 
   const handleSubmit = async (values) => {
-    authRequests(`${BASE_URL}/login/`, values, router)
+    authRequests(`/login/`, values, router, setLoading)
   }
 
   return (
@@ -68,8 +69,9 @@ const Auth = () => {
                   style={{ color: "red" }}
                 />
               </div>
+              {loading && <Loading />}
               <div className={s.btn}>
-                <MyBtn type="submit">Register</MyBtn>
+                <MyBtn type="submit">Войти</MyBtn>
               </div>
             </Form>
           </Formik>

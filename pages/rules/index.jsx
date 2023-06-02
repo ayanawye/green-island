@@ -1,3 +1,4 @@
+import ForYou from '@/components/AboutPage/forYou/ForYou';
 import Head from 'next/head';
 
 const Rules = () => {
@@ -7,7 +8,7 @@ const Rules = () => {
         <title>Для вас</title>
       </Head>
       <div>
-        rules
+        <ForYou />
       </div>
     </>
   );

@@ -6,7 +6,6 @@
 }
 .container {
   @include container;
-  padding-top: 4%;
 }
 .details {
   @include grid-column2;
@@ -40,7 +39,7 @@
 .content {
   display: flex;
   column-gap: 2%;
-  margin-bottom: 10%;
+  margin-bottom: 3vh;
   &__title {
     @include little-description;
     margin-bottom: 10px;

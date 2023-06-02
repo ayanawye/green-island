@@ -1,11 +1,9 @@
-import React from 'react';
+import Addresses from '@/components/AboutPage/addresses/Addresses';
 
-const Addresses = () => {
+const addresses = () => {
   return (
-    <div>
-      tytughijok
-    </div>
+    <Addresses />
   );
 };
 
-export default Addresses;
+export default addresses;

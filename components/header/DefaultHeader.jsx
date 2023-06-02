@@ -2,6 +2,7 @@ import s from './Header.module.scss';
 import Link from "next/link";
 import MyBtn from "../ui/button/MyBtn";
 import { useRouter } from "next/router";
+import { message } from 'antd';
 
 const DefaultHeader = () => {
   const navigation = [
@@ -10,7 +11,22 @@ const DefaultHeader = () => {
     { id: 3, title: "Новости", path: "/news" },
     { id: 4, title: "Для вас", path: "/rules" },
   ];
-  const { pathname } = useRouter();
+  const router = useRouter();
+
+  const logOut = () => {
+    localStorage.removeItem("userInfo")
+    message.open({
+      type: "success",
+      content: "Вы вышли с аккаунта",
+      style: {
+        marginTop: "100px"
+      }
+    })
+    setTimeout(() => {
+      router.push("/")
+    }, 1000)
+  }
+
   return (
     <>
       <nav className={s.nav}>
@@ -18,7 +34,7 @@ const DefaultHeader = () => {
           <Link
             href={path}
             key={id}
-            className={pathname === path ? s.active : s.link}
+            className={router.pathname === path ? s.active : s.link}
           >
             {title}
           </Link>
@@ -27,7 +43,7 @@ const DefaultHeader = () => {
       <div className={s.flex}>
         <Link href="/login">Войти</Link>
         <div className={s.btn}>
-          <MyBtn>
+          <MyBtn onClick={() => logOut()}>
             <Link href="/regist">Sign up</Link>
           </MyBtn>
         </div>

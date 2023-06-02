@@ -1,16 +1,17 @@
+import NewsList from "@/components/AboutPage/newsList/NewsList";
 import Head from "next/head";
 
-const News = () => {
+const news = () => {
   return (
     <>
       <Head>
         <title>Новости</title>
       </Head>
       <div>
-        news
+        <NewsList/>
       </div>
     </>
   );
 };
 
-export default News;
+export default news;

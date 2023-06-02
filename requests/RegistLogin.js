@@ -1,9 +1,11 @@
+import { BASE_URL } from "@/base_url/BASE_URL";
 import { message } from "antd";
 import axios from "axios";
 
-export const postRegistRequests = async (endpoint, bodyObj, router) => {
+export const postRegistRequests = async (endpoint, bodyObj, router, setLoading) => {
   try {
-    const resp = await axios.post(endpoint, bodyObj);
+    setLoading(true)
+    const resp = await axios.post(`${BASE_URL}${endpoint}`, bodyObj);
     const data = await resp.data
     localStorage.setItem("userInfo", JSON.stringify(data));
     message.open({
@@ -14,6 +16,7 @@ export const postRegistRequests = async (endpoint, bodyObj, router) => {
         fontSize: "20px",
       },
     });
+    setLoading(false)
     setTimeout(() => {
       router.push("/user")
     }, 2000);
@@ -29,13 +32,15 @@ export const postRegistRequests = async (endpoint, bodyObj, router) => {
   }
 };
 
-export const authRequests = async (endpoint, bodyObj, router) => {
+export const authRequests = async (endpoint, bodyObj, router, setLoading) => {
   console.log(bodyObj);
   try {
-    const resp = await axios.post(endpoint, bodyObj);
+    setLoading(true)
+    const resp = await axios.post(`${BASE_URL}${endpoint}`, bodyObj);
     const data = await resp.data
     const userType = data.user_type
     localStorage.setItem("userInfo", JSON.stringify(data));
+    setLoading(false)
     {
       if (userType === "CLIENT") {
         return router.push("/user");
@@ -57,15 +62,17 @@ export const authRequests = async (endpoint, bodyObj, router) => {
   }
 };
 
-export const teamRegistration = async(endpoint, bodyObj, token, funk) => {
+export const teamRegistration = async(endpoint, bodyObj, token, funk, setLoading) => {
   try {
-    await axios.post(endpoint, bodyObj,
+    setLoading(true)
+    await axios.post(`${BASE_URL}${endpoint}`, bodyObj,
       {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       }
     );
+    setLoading(false)
     message.open({
       type: "success",
       content: "Регистрация прошла успешно!",
