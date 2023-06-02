@@ -39,7 +39,7 @@ $white-color: #fff;
 
 // MIXINS
 @mixin container {
-  max-width: 90%;
+  max-width: 80%;
   margin: 0 auto;
 }
 @mixin flex-base($align, $justify) {
@@ -50,15 +50,13 @@ $white-color: #fff;
 
 @mixin grid-column2 {
   display: grid;
-  // grid-template-columns: repeat(2, 1fr);
-  grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
+  grid-template-columns: repeat(2, 1fr);
   column-gap: 3%;
   row-gap: 10%;
 }
 @mixin grid-column3 {
   display: grid;
-  // grid-template-columns: repeat(3, 1fr);
-  grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   column-gap: 5%;
   row-gap: 10%;
 }
@@ -70,7 +68,7 @@ $white-color: #fff;
   line-height: 92px;
 }
 @mixin mid-title {
-  font-weight: 400;
+  font-weight: 500;
   font-size: 50px;
   line-height: 72px;
 }

@@ -1,42 +1,59 @@
-import { Table } from 'antd';
-import { useState } from 'react';
-import MyBtn from '../ui/button/MyBtn';
+import { Table, message } from "antd";
+import { useEffect, useState } from "react";
+import MyBtn from "../ui/button/MyBtn";
+import { getAllApplications } from "@/requests/Applications";
 
 const AllApplications = () => {
   const [applications, setApplication] = useState([
-    {id: 1, date: "10-02-2023", type: "Вывусти мусор", address: "Rekbr, 2/4"},
-    {id: 2, date: "22-02-2023", type: "Демонтировать экобокс", address: "Роа, 2/4"},
-    {id: 3, date: "9-02-2023", type: "Установить экобокс", address: "Киевкая, 44"},
-    {id: 4, date: "9-02-2023", type: "Установить экобокс", address: "Киевкая, 44"},
-  ])
+    { id: 1, date: "10-02-2023", type: "Вынести мусор", address: "Rekbr, 2/4" },
+  ]);
 
+  useEffect(() => {
+    const resp = JSON.parse(localStorage.getItem('userInfo'))
+    const access = resp.access
+    getAllApplications(`/applications/`, access, setApplication)
+  },[])
+
+  const takeApplication = (record) => {
+    setApplication(applications.filter((e) => e.id !== record.id));
+    message.open({
+      type: "success",
+      content: "Добавили в ваши заявки",
+      style: {
+        marginTop: "5%",
+        fontSize: "20px",
+      },
+    });
+  };
+  
   const columns = [
     {
-      title: '№',
-      dataIndex: 'id',
-      key: 'id',
+      title: "№",
+      key: "id",
       render: (_, record, index) => index + 1,
     },
     {
-      title: 'Дата',
-      dataIndex: 'date',
-      key: 'date',
+      title: "Дата",
+      dataIndex: "date",
+      key: "date",
     },
     {
-      title: 'Тип заявки',
-      dataIndex: 'type',
-      key: 'type',
+      title: "Тип заявки",
+      dataIndex: "type",
+      key: "type",
     },
     {
-      title: 'Адрес',
-      dataIndex: 'address',
-      key: 'address',
+      title: "Адрес",
+      dataIndex: "address",
+      key: "address",
     },
     {
-      title: 'Действие',
-      key: 'action',
+      title: "Действие",
+      key: "action",
       render: (text, record) => (
-        <MyBtn type="primary">Взяться за работу</MyBtn>
+        <MyBtn type="primary" onClick={() => takeApplication(record)}>
+          Взяться за работу
+        </MyBtn>
       ),
     },
   ];

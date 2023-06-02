@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Error from '../404';
+import BrigadeApplication from '@/components/BrigadePage/BrigadeApplication';
 
 const Brigade = () => {
   const [userInfo, setUserInfo] = useState(null)
@@ -10,7 +11,7 @@ const Brigade = () => {
   return (
     <>
     {userInfo
-    ? <h1>fghj</h1>
+    ? <BrigadeApplication />
     : ""}
     </>
   );

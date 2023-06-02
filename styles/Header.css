@@ -48,3 +48,51 @@
 .ant-btn-primary:not(:disabled):hover{
   background-color: #55b916;
 }
+.ant-table-thead >tr>th{
+  text-align: center !important;
+}
+.ant-table-wrapper table{
+  text-align: center !important;
+}
+.ant-pagination-item a{
+  color: #215700 !important;
+}
+.ant-pagination-item-active{
+  border-color: #215700 !important;
+}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):active{
+  color: #215700 ;
+  border-color: #215700 ;
+}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover{
+  color: #215700 !important;
+  border-color: #215700;
+}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before{
+  background-color: #215700 ;
+}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover::before{
+  background-color: #215700 ;
+}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled){
+  color: #215700 ;
+  border-color: #215700 !important;
+}
+.ant-form-item-control-input-content > button{
+  display: flex;
+  margin: 0 auto;
+}
+.ant-radio-group{
+  display: flex;
+  justify-content: center;
+}
+.ant-input-affix-wrapper:not(.ant-input-affix-wrapper-disabled):hover{
+  border-color: #215700;
+}
+.ant-checkbox-inner{
+  border-color: #215700 !important;
+}
+.ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner{
+  background-color: #215700 !important;
+
+}

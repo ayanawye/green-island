@@ -23,7 +23,7 @@ const Partners = () => {
     <section className={s.partners}>
       <div className={s.container}>
         <div className={s.content}>
-          <div className={s.name}>РАЗДЕЛЫ</div>
+          <div className={s.name}>ПАРТНЕРЫ</div>
           <h3 className={s.title}>С НАМИ РАБОТАЮТ</h3>
           <Slider style={{paddingLeft: "6%"}} {...settings}>
             <div className={s.card}>

@@ -2,11 +2,19 @@ import s from './About.module.scss';
 import Trash from '../../../assets/images/trash.png';
 import Image from 'next/image';
 import BigText from '../../ui/bigText/BigText';
+import { motion, useAnimation } from 'framer-motion';
+import { useEffect } from 'react';
 
 const About = () => {
+  const controls = useAnimation();
+
+  useEffect(() => {
+    controls.start({ opacity: 1, y: 0 });
+  }, [controls]);
   return (
     <>
-      <section className={s.about}>
+      <motion.section 
+      className={s.about}>
         <div className={`${s.container} ${s.details}`}>
           <div className={s.left}>
             <p className={s.name}>О НАС</p>
@@ -40,7 +48,7 @@ const About = () => {
             </div>
           </div>
         </div>
-      </section>
+      </motion.section>
       <BigText leftText={'СОБИРАЕМ ЭКОСООБЩЕСТВО'} rightText={"ВМЕСТЕ С НАМИ!"}/>
     </>
   );

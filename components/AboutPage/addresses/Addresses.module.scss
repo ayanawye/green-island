@@ -1,0 +1,39 @@
+@import '../../../styles/variables';
+
+.addresses{
+  border-top: 1px solid $accent-color;
+  .container{
+    padding: 2% 4%;
+    @include container;
+  }
+  .title{
+    @include mid-title;
+  }
+  .desc{
+    @include description;
+  }
+  .address{
+    margin-top: 60px;
+  }
+  .card{
+    @include little-description;
+    @include grid-column2;
+    padding: 1%;
+    border: 1px solid $accent-color;
+    margin-bottom: 1%;
+    &__schedule{
+      color: rgba(0, 0, 0, 0.7);
+    }
+    &__phone{
+      color: $accent-color;
+    }
+  }
+  .flex{
+    @include flex-base(center, space-around)
+  }
+  .map{
+    margin-top: 50px;
+    width: 100%;
+    height: 500px;
+  }
+}

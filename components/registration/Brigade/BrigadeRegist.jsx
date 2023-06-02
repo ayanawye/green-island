@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { Form, Input, Button, Checkbox, message } from "antd";
+import { useEffect, useState } from "react";
+import { Form, Input, Button, Checkbox } from "antd";
 import { useFormik } from "formik";
-import axios from "axios";
-import { BASE_URL } from "@/base_url/BASE_URL";
 import { teamRegistration } from "@/requests/RegistLogin";
+import Loading from "@/components/ui/loading/Loading";
 
 const BrigadeRegist = () => {
   const [token, setToken] = useState(null)
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     const resp = JSON.parse(localStorage.getItem("userInfo"))
     const access = resp.access
@@ -23,7 +23,7 @@ const BrigadeRegist = () => {
       user_type: "",
     },
     onSubmit: (values) => {
-      teamRegistration(`${BASE_URL}/brigades/register/`, values, token, formik.resetForm)
+      teamRegistration(`/brigades/register/`, values, token, formik.resetForm, setLoading)
     },
     validate: (values) => {
       const errors = {};
@@ -60,7 +60,7 @@ const BrigadeRegist = () => {
     <Form
       layout="vertical"
       onFinish={formik.handleSubmit}
-      style={{ maxWidth: "300px" }}
+      style={{ maxWidth: "100%" }}
     >
       <Form.Item
         label="Email"
@@ -134,10 +134,10 @@ const BrigadeRegist = () => {
           Бригада
         </Checkbox>
       </Form.Item>
-
+      {loading && <Loading />}
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Зарегистрироваться
+          Зарегистрировать
         </Button>
       </Form.Item>
     </Form>

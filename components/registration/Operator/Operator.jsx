@@ -1,18 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Form, Input, Button, Checkbox } from "antd";
 import { useFormik } from "formik";
-import axios from "axios";
-import { BASE_URL } from "@/base_url/BASE_URL";
 import { teamRegistration } from "@/requests/RegistLogin";
+import Loading from "@/components/ui/loading/Loading";
 
 const OperatorRegist = () => {
-  const [userInfo, setUserInfo] = useState(null)
   const [token, setToken] = useState(null)
+  const [loading, setLoading] = useState(false)
   useEffect(() => {
     const resp = JSON.parse(localStorage.getItem("userInfo"))
     const access = resp.access
     setToken(access)
-    setUserInfo(resp)
   }, [])
 
 
@@ -25,7 +23,7 @@ const OperatorRegist = () => {
       user_type: "",
     },
     onSubmit: async (values) => {
-      teamRegistration(`${BASE_URL}/operators/register/`, values, token, formik.resetForm)
+      teamRegistration(`/operators/register/`, values, token, formik.resetForm, setLoading)
     },
     validate: (values) => {
       const errors = {};
@@ -58,7 +56,7 @@ const OperatorRegist = () => {
     <Form
       layout="vertical"
       onFinish={formik.handleSubmit}
-      style={{ maxWidth: "300px" }}
+      style={{ maxWidth: "100%" }}
     >
       <Form.Item
         label="Email"
@@ -120,9 +118,10 @@ const OperatorRegist = () => {
           Оператор
         </Checkbox>
       </Form.Item>
+      {loading && <Loading />}
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Зарегистрироваться
+          Зарегистрировать
         </Button>
       </Form.Item>
     </Form>

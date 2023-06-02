@@ -4,9 +4,10 @@
 .product{
   background-color: $light-color;
   color: $white-color;
+  padding: 2%;
 }
 .text{
-  padding: 0 210px 20px;
+  padding: 0 10% 3vh;
 }
 .section__name{
   @extend .section-name;
@@ -15,12 +16,9 @@
 .title{
   @include mid-title;
 }
-.product{
-  padding: 30px 0 60px;
-}
 .img{
   min-width: 10%;
-  height: 20%;
+  height: 6 0vh;
   padding: 5%;
 }
 .image{

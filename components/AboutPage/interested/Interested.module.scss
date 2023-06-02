@@ -1,59 +1,69 @@
 @import "../../../styles/variables";
 
-.interested{
-  padding: 5% 0 20%;
+.interested {
+  padding: 8vh 0;
   background-color: $background-green;
 }
-.container{
+.container {
   @include container;
+  position: relative;
 }
-.name{
+.name {
   @extend .section-name;
   color: $black-color;
 }
-.title{
+.title {
   @include title-style;
   color: $white-color;
-  margin: 1% 0 5%;
-  span{
+  margin: 1% 0 1vh;
+  span {
     color: $accent-color;
   }
 }
-.cards{
+.svg {
+  position: absolute;
+  left: calc(50% + 42%);
+  top: 8vh;
+  background: url("../../../assets/images/circle_text.png"), no-repeat, center/contain;
+  height: 230px;
+  width: 230px;
+}
+.cards {
+  margin-top: 4vh;
   @include grid-column3;
 }
-.card{
+.card {
   @include little-description;
-  height: 110%;
+  height: 60vh;
   padding-top: 10%;
   background-color: $white-color;
-  &__content{
+  &__content {
     height: 50%;
     position: relative;
     padding-left: 10%;
   }
-  &__title{
+  &__title {
     @include mid-title;
     margin-top: 1%;
   }
-  &__desc{
+  &__desc {
     @include description;
   }
-  &__link{
+  &__link {
     @include little-description;
     color: $light-color;
     position: absolute;
     bottom: 0;
-    &:hover{
+    &:hover {
       color: $accent-color;
     }
   }
 }
-.image{
+.image {
   width: 70%;
   height: 45%;
   @extend .center;
-  .img{
+  .img {
     width: 100%;
     height: 100%;
   }

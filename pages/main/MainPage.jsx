@@ -6,7 +6,6 @@ import Partners from '@/components/AboutPage/partners/Partners';
 import Benefit from '@/components/AboutPage/benefits/Benefit';
 import Products from '@/components/AboutPage/products/Products';
 import Contact from '@/components/AboutPage/contacts/Contact';
-import Videoplayer from '@/components/videoPlayer/Videoplayer';
 
 const MainPage = () => {
   return (
@@ -19,7 +18,6 @@ const MainPage = () => {
       <Benefit />
       <Products />
       <Contact />
-      {/* <Videoplayer /> */}
     </>
   );
 };

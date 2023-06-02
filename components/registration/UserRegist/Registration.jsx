@@ -10,6 +10,7 @@ import Logo from "../../assets/images/logo2.png";
 import MyField from "../../ui/input/MyField";
 import s from "./Registration.module.scss";
 import * as Yup from "yup";
+import Loading from "@/components/ui/loading/Loading";
 
 const validationSchema = Yup.object({
   email: Yup.string().email("Не валидная почта").required("Обязательное поле!"),
@@ -29,6 +30,7 @@ const validationSchema = Yup.object({
 
 const Registration = () => {
   const router = useRouter()
+  const [loading, setLoading] = useState(false)
   const [initialValues, setInitialValues] = useState({
     email: "",
     company_name: "",
@@ -46,7 +48,7 @@ const Registration = () => {
   const id = userInfo.user_id
 
   const handleSubmit = async (values) => {
-    postRegistRequests(`${BASE_URL}/clients/register/`, values, router, id)
+    postRegistRequests(`/clients/register/`, values, router, id, setLoading)
   };
 
   return (
@@ -147,6 +149,7 @@ const Registration = () => {
                   style={{ color: "red" }}
                 />
               </div>
+              {loading && <Loading />}
               <div className={s.btn}>
                 <MyBtn type="submit">Register</MyBtn>
               </div>
