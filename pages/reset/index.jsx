@@ -14,7 +14,7 @@ const validationSchema = Yup.object().shape({
   email: Yup.string().email("Не валидная почта").required("Обязательное поле!"),
 });
 
-const index = () => {
+const Index = () => {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
@@ -64,4 +64,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;

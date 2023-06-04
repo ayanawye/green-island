@@ -1,7 +1,7 @@
 import BrigadeList from '@/components/OperatorPage/BrigadeList';
 import React from 'react';
 
-const brig = () => {
+const Brig = () => {
   return (
     <div>
       <BrigadeList />
@@ -9,4 +9,4 @@ const brig = () => {
   );
 };
 
-export default brig;
+export default Brig;

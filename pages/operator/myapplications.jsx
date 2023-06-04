@@ -1,9 +1,9 @@
 import MyApplications from '@/components/OperatorPage/MyApplications';
 
-const applications = () => {
+const Applications = () => {
   return (
     <MyApplications />
   )
 };
 
-export default applications;
+export default Applications;

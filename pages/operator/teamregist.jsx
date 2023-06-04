@@ -1,10 +1,9 @@
 import TeamRegist from '@/components/OperatorPage/TeamRegist';
-import React, { useState } from 'react';
 
-const teamregist = () => {
+const Teamregistration = () => {
   return (
     <TeamRegist />
   );
 };
 
-export default teamregist;
+export default Teamregistration;
