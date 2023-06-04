@@ -17,10 +17,10 @@ const textAnimation2 = {
     opacity: 0,
   },
   visible: {
-    x: -100,
+    x: -10,
     opacity: 1,
     transition: {
-      delay: 1,
+      delay: 0.5,
     }
   }
 }

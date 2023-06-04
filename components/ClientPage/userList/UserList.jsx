@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Table, Modal, Form, Input, Button, Select, Typography } from "antd";
 import MyBtn from "@/components/ui/button/MyBtn";
 import CreateApplication from "../modal/CreateApplication";
+import { getAllApplications } from "@/requests/Applications";
 
 const { confirm } = Modal;
 const { Option } = Select;
@@ -11,7 +12,7 @@ const UserList = () => {
   const [initialData, setInitialData] = useState([
     {
       id: 1,
-      date: "05-01-2023",
+      started_create: "05-01-2023",
       type: "Вывести мусор",
       status: "на рассмотрении",
       comment: "Комментарий 1",
@@ -32,10 +33,18 @@ const UserList = () => {
     },
   ]);
   const [data, setData] = useState(initialData);
+  const [userData, setUserData] = useState([])
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [modal, setModal] = useState(false);
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    const resp = JSON.parse(localStorage.getItem("userInfo"))
+    const access = resp.access
+    setUserData(resp)
+    getAllApplications("/client/applications/", access, setData)
+  }, [])
 
   const handleDelete = (record) => {
     confirm({
@@ -96,13 +105,13 @@ const UserList = () => {
       ),
     },
   ];
+
   const addApplication = (data) => {
     setData([data, ...initialData]);
   };
-  const [filteredItems, setFilteredItems] = useState(data);
-
+  
   const filterByStatus = (status) => {
-    const filtered = data.filter((item) => {
+    const filtered = initialData.filter((item) => {
       if (status === 'Закрытые заявки') {
         return item.status === 'finish';
       } else if (status === 'Активные заявки') {
@@ -110,8 +119,7 @@ const UserList = () => {
       }
       return false;
     });
-
-    setFilteredItems(filtered);
+    setData(filtered)
   };
 
   return (
@@ -135,7 +143,7 @@ const UserList = () => {
         </div>
       </div>
       <Table
-        dataSource={filteredItems}
+        dataSource={data}
         columns={columns}
         pagination={false}
         rowKey="id"
@@ -165,13 +173,6 @@ const UserList = () => {
           </Form.Item>
         </Form>
       </Modal>
-      <style jsx global>{`
-        @media (max-width: 800px) {
-          .ant-table-column-title-comment {
-            display: none;
-          }
-        }
-      `}</style>
     </div>
   );
 };

@@ -3,6 +3,17 @@ import { Form, Input, Button, Checkbox } from "antd";
 import { useFormik } from "formik";
 import { teamRegistration } from "@/requests/RegistLogin";
 import Loading from "@/components/ui/loading/Loading";
+import * as Yup from "yup";
+
+const validationSchema = Yup.object().shape({
+  email: Yup.string().email("Не валидная почта").required("Обязательное поле"),
+  password: Yup.string().required("Обязательное поле"),
+  password_confirmation: Yup.string()
+    .oneOf([Yup.ref("password"), null], "Пароли не совпадают")
+    .required("Обязательное поле"),
+  full_name: Yup.string().required("Обязательное поле"),
+  phone: Yup.string().required("Обязательное поле").length(13, "Не валидный номер телефона"),
+});
 
 const OperatorRegist = () => {
   const [token, setToken] = useState(null)
@@ -13,62 +24,30 @@ const OperatorRegist = () => {
     setToken(access)
   }, [])
 
-
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
       password_confirmation: "",
       full_name: "",
-      user_type: "",
+      phone: "",
+      user_type: "OPERATOR",
     },
+    validationSchema: validationSchema,
     onSubmit: async (values) => {
       teamRegistration(`/operators/register/`, values, token, formik.resetForm, setLoading)
     },
-    validate: (values) => {
-      const errors = {};
-
-      if (!values.email) {
-        errors.email = "Обязательное поле";
-      }
-
-      if (!values.password) {
-        errors.password = "Обязательное поле";
-      }
-
-      if (values.password !== values.password_confirmation) {
-        errors.password_confirmation = "Пароли не совпадают";
-      }
-
-      if (!values.full_name) {
-        errors.full_name = "Обязательное поле";
-      }
-
-      return errors;
-    },
   });
 
-  const handleUserTypeChange = (e) => {
-    formik.setFieldValue("user_type", e.target.checked ? "OPERATOR" : "");
-  };
-
   return (
-    <Form
-      layout="vertical"
-      onFinish={formik.handleSubmit}
-      style={{ maxWidth: "100%" }}
-    >
+    <Form layout="vertical" onFinish={formik.handleSubmit} style={{ maxWidth: "100%" }}>
       <Form.Item
         label="Email"
         hasFeedback
         validateStatus={formik.errors.email ? "error" : ""}
         help={formik.errors.email}
       >
-        <Input
-          name="email"
-          value={formik.values.email}
-          onChange={formik.handleChange}
-        />
+        <Input name="email" value={formik.values.email} onChange={formik.handleChange} />
       </Form.Item>
 
       <Form.Item
@@ -77,11 +56,7 @@ const OperatorRegist = () => {
         validateStatus={formik.errors.password ? "error" : ""}
         help={formik.errors.password}
       >
-        <Input.Password
-          name="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-        />
+        <Input.Password name="password" value={formik.values.password} onChange={formik.handleChange} />
       </Form.Item>
 
       <Form.Item
@@ -98,27 +73,25 @@ const OperatorRegist = () => {
       </Form.Item>
 
       <Form.Item
-        label="Полное имя"
+        label="Ваше имя:"
         hasFeedback
         validateStatus={formik.errors.full_name ? "error" : ""}
         help={formik.errors.full_name}
       >
-        <Input
-          name="full_name"
-          value={formik.values.full_name}
-          onChange={formik.handleChange}
-        />
+        <Input name="full_name" value={formik.values.full_name} onChange={formik.handleChange} />
       </Form.Item>
 
-      <Form.Item label="Роль">
-        <Checkbox
-          checked={formik.values.user_type === "OPERATOR"}
-          onChange={handleUserTypeChange}
-        >
-          Оператор
-        </Checkbox>
+      <Form.Item
+        label="Номер телефона: +996........."
+        hasFeedback
+        validateStatus={formik.errors.phone ? "error" : ""}
+        help={formik.errors.phone}
+      >
+        <Input name="phone" value={formik.values.phone} onChange={formik.handleChange} />
       </Form.Item>
+
       {loading && <Loading />}
+
       <Form.Item>
         <Button type="primary" htmlType="submit">
           Зарегистрировать

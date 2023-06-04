@@ -9,3 +9,7 @@ export const getAllApplications = async (endpoint, token, setApplication) => {
   console.log(data);
   setApplication(data)
 }
+
+// export const getUserApplications = async () => {
+//   const resp = await axios.get(`${BASE_URL}${}`)
+// }

@@ -22,7 +22,6 @@ const SortingList = ({ materials }) => {
     <motion.div 
      initial="hidden" 
      whileInView="visible"
-     viewport={{once: true}} 
      className={s.cards}
     >
       {materials.map((material, index) => (

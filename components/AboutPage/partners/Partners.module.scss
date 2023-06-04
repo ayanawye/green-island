@@ -1,14 +1,11 @@
 @import "../../../styles/variables";
 
 .partners{
-  padding: 2vh 0 4vh;
+  padding: 5vh 0 10vh;
   background-color: $background-green;
 }
 .container{
   @include container;
-}
-.slider {
-  padding-left: 10% !important;
 }
 .card{
   max-width: 60%;
@@ -22,8 +19,37 @@
 .title{
   @include mid-title;
   color: $white-color;
-  margin: 2% 0 6%;
+  margin: 2vh 0 3vh;
+}
+.slider{
+  width: 95%;
+  margin: 0 auto;
 }
 .image{
   @extend .image-size;
+}
+
+@media (max-width: 1400px){
+  .title{
+    margin: 1vh 0 2vh;
+  }
+}
+@media (max-width: 800px){
+  .partners{
+    padding: 5vh 0 8vh;
+  }
+  .title{
+    margin: 0 0 2vh;
+  }
+  .slider{
+    width: 90%;
+  }
+}
+@media (max-width: 700px){
+  .partners{
+    padding: 5vh 0 6vh;
+  }
+  .slider{
+    width: 80%;
+  }
 }

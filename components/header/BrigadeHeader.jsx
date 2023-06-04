@@ -2,7 +2,6 @@ import Link from 'next/link';
 import MyBtn from "../ui/button/MyBtn";
 import { useRouter } from "next/router";
 import s from './Header.module.scss';
-import DefaultHeader from './DefaultHeader';
 import { message } from 'antd';
 
 const BrigadeHeader = () => {
@@ -23,7 +22,7 @@ const BrigadeHeader = () => {
     })
     setTimeout(() => {
       router.push("/")
-    }, 1000)
+    }, 0)
   }
   return (
     <>

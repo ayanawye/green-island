@@ -2,11 +2,16 @@ import { BASE_URL } from "@/base_url/BASE_URL";
 import { message } from "antd";
 import axios from "axios";
 
-export const postRegistRequests = async (endpoint, bodyObj, router, setLoading) => {
+export const postRegistRequests = async (
+  endpoint,
+  bodyObj,
+  router,
+  setLoading
+) => {
   try {
-    setLoading(true)
+    setLoading(true);
     const resp = await axios.post(`${BASE_URL}${endpoint}`, bodyObj);
-    const data = await resp.data
+    const data = await resp.data;
     localStorage.setItem("userInfo", JSON.stringify(data));
     message.open({
       type: "success",
@@ -16,31 +21,39 @@ export const postRegistRequests = async (endpoint, bodyObj, router, setLoading) 
         fontSize: "20px",
       },
     });
-    setLoading(false)
+    setLoading(false);
     setTimeout(() => {
-      router.push("/user")
+      router.push("/user");
     }, 2000);
   } catch (e) {
+    console.log(e);
     message.error({
       type: "error",
-      content: `${e.data}`,
+      content: `${e.response.data.email}`,
       style: {
         marginTop: "5%",
         fontSize: "20px",
       },
     });
+    setLoading(false);
   }
 };
 
-export const authRequests = async (endpoint, bodyObj, router, setLoading) => {
-  console.log(bodyObj);
+export const authRequests = async (
+  endpoint,
+  bodyObj,
+  router,
+  setLoading,
+  error,
+  setError
+) => {
   try {
-    setLoading(true)
+    setLoading(true);
     const resp = await axios.post(`${BASE_URL}${endpoint}`, bodyObj);
-    const data = await resp.data
-    const userType = data.user_type
+    const data = await resp.data;
+    const userType = data.user_type;
     localStorage.setItem("userInfo", JSON.stringify(data));
-    setLoading(false)
+    setLoading(false);
     {
       if (userType === "CLIENT") {
         return router.push("/user");
@@ -50,29 +63,68 @@ export const authRequests = async (endpoint, bodyObj, router, setLoading) => {
       return router.push("/operator");
     }
   } catch (e) {
-    console.log(e);
+    setLoading(false);
     message.open({
       type: "error",
-      content: "Неправильная почта или пароль",
+      content: `${e.response.data.non_field_errors[0]}`,
       style: {
         marginTop: "5%",
         fontSize: "20px",
       },
     });
+    const addError = () => {
+      setError([...error, e]);
+    };
+    addError();
   }
 };
 
-export const teamRegistration = async(endpoint, bodyObj, token, funk, setLoading) => {
+export const resetPassword = async (endpoint, bodyObj, router, setLoading) => {
   try {
-    setLoading(true)
-    await axios.post(`${BASE_URL}${endpoint}`, bodyObj,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-    setLoading(false)
+    setLoading(true);
+    const resp = await axios.post(`${BASE_URL}${endpoint}`, bodyObj);
+    console.log(resp);
+    setLoading(false);
+    message.open({
+      type: "success",
+      content: "Проверьте почту",
+      style: {
+        marginTop: "5%",
+        fontSize: "20px",
+      },
+    });
+    setTimeout(() => {
+      router.push("/login");
+    }, 2000);
+  } catch (e) {
+    console.log(e);
+    message.open({
+      type: "error",
+      content: `${e.response.data.error}`,
+      style: {
+        marginTop: "5%",
+        fontSize: "20px",
+      },
+    });
+    setLoading(false);
+  }
+};
+
+export const teamRegistration = async (
+  endpoint,
+  bodyObj,
+  token,
+  funk,
+  setLoading
+) => {
+  try {
+    setLoading(true);
+    await axios.post(`${BASE_URL}${endpoint}`, bodyObj, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    setLoading(false);
     message.open({
       type: "success",
       content: "Регистрация прошла успешно!",
@@ -80,19 +132,32 @@ export const teamRegistration = async(endpoint, bodyObj, token, funk, setLoading
         marginTop: "5%",
         fontSize: "20px",
       },
-    })
+    });
     setTimeout(() => {
-      funk()
-    }, 2000)
-  } 
-  catch (e) {
-    message.open({
-      type: "error",
-      content: "Пользователь с такой почтoй уже существует",
-      style: {
-        marginTop: "5%",
-        fontSize: "20px",
-      },
-    })
+      funk();
+    }, 5000);
+  } catch (e) {
+    const email = e.response.data.email;
+    const token = e.response.data.detail;
+    {
+      email
+        ? message.open({
+            type: "error",
+            content: `${email}`,
+            style: {
+              marginTop: "5%",
+              fontSize: "20px",
+            },
+          })
+        : message.open({
+            type: "error",
+            content: `${token}`,
+            style: {
+              marginTop: "5%",
+              fontSize: "20px",
+            },
+          });
+    }
+    setLoading(false);
   }
-}
+};

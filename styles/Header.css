@@ -94,5 +94,32 @@
 }
 .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner{
   background-color: #215700 !important;
-
+}
+.ant-form-item{
+  margin: 0;
+}
+.ant-form-item .ant-form-item-row{
+  margin-top: 1vh;
+}
+.ant-input-affix-wrapper{
+  border-radius: 20px;
+}
+.ant-form-item-explain-error{
+  color: rgb(110, 16, 16);
+}
+.ant-col>label{
+  margin-bottom: 1vh;
+  font-family: "Jost";
+}
+.ant-form-vertical .ant-form-item-label{
+  padding: 0 0 4px;
+}
+.ant-input-affix-wrapper >input.ant-input{
+  background: none;
+  height: 3vh;
+  padding: 2vh 1%;
+  font-size: 18px;
+}
+.slick-slide{
+  max-width: 500px;
 }

@@ -1,8 +1,8 @@
-import s from './Header.module.scss';
+import s from "./Header.module.scss";
 import Link from "next/link";
 import MyBtn from "../ui/button/MyBtn";
 import { useRouter } from "next/router";
-import { message } from 'antd';
+import Burger from "../ui/burger/Burger";
 
 const DefaultHeader = () => {
   const navigation = [
@@ -11,43 +11,36 @@ const DefaultHeader = () => {
     { id: 3, title: "Новости", path: "/news" },
     { id: 4, title: "Для вас", path: "/rules" },
   ];
+  const log = [
+    { id: 1, title: "Войти", path: "/login" },
+    { id: 2, title: "Регистрация", path: "/regist" },
+  ];
   const router = useRouter();
-
-  const logOut = () => {
-    localStorage.removeItem("userInfo")
-    message.open({
-      type: "success",
-      content: "Вы вышли с аккаунта",
-      style: {
-        marginTop: "100px"
-      }
-    })
-    setTimeout(() => {
-      router.push("/")
-    }, 1000)
-  }
 
   return (
     <>
-      <nav className={s.nav}>
-        {navigation.map(({ id, path, title }) => (
-          <Link
-            href={path}
-            key={id}
-            className={router.pathname === path ? s.active : s.link}
-          >
-            {title}
-          </Link>
-        ))}
-      </nav>
-      <div className={s.flex}>
-        <Link href="/login">Войти</Link>
-        <div className={s.btn}>
-          <MyBtn onClick={() => logOut()}>
-            <Link href="/regist">Sign up</Link>
-          </MyBtn>
+      <div className={s.navigation}>
+        <nav className={s.nav}>
+          {navigation.map(({ id, path, title }) => (
+            <Link
+              href={path}
+              key={id}
+              className={router.pathname === path ? s.active : s.link}
+            >
+              {title}
+            </Link>
+          ))}
+        </nav>
+        <div className={s.flex}>
+          <Link href="/login">Войти</Link>
+          <div className={s.btn}>
+            <MyBtn>
+              <Link href="/regist">Sign up</Link>
+            </MyBtn>
+          </div>
         </div>
       </div>
+      <Burger navig={navigation} log={log} />
     </>
   );
 };

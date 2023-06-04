@@ -1,4 +1,4 @@
-@import "../../../styles/variables";
+  @import "../../../styles/variables";
 
 .about {
   padding-top: 4%;
@@ -10,31 +10,32 @@
 .details {
   @include grid-column2;
 }
+.left{
+  @include flex-base(flex-start, center);
+  flex-direction: column;
+}
 .name {
   @extend .section-name;
 }
 .title {
   @include title-style;
-  font-weight: 500;
-  margin: 10% 0 4%;
   span {
     color: $accent-color;
   }
 }
 .desc {
+  @include small-title;
   font-weight: 400;
-  font-size: 40px;
-  line-height: 58px;
 }
 .image {
   width: 60%;
-  height: 35%;
+  height: 30vh;
   img {
     @extend .image-size;
   }
 }
 .right {
-  padding: 5%;
+  padding-top: 5%;
 }
 .content {
   display: flex;
@@ -58,4 +59,48 @@
 }
 .big_text {
   @include big-text;
+}
+
+
+@media (max-width: 1800px){
+  .image{
+    height: 25vh;
+  }
+}
+@media (max-width: 1400px){
+  .image{
+    height: 20vh;
+  }
+}
+@media (max-width: 1100px){
+  .image{
+    height: 17vh;
+  }
+}
+@media (max-width: 1000px){
+  .image{
+    width: 30%;
+    height: 20vh;
+    display: flex;
+    margin: 0 auto;
+  }
+  .right {
+    padding-top: 0;
+  }
+}
+@media (max-width: 800px){
+  .image{
+    width: 50%;
+    height: 20vh;
+    display: flex;
+    margin: 0 auto;
+  }
+}
+@media (max-width: 550px){
+  .image{
+    width: 50%;
+    height: 17vh;
+    display: flex;
+    margin: 0 auto;
+  }
 }
