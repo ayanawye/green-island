@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
 import ProfileUser from '@/components/ClientPage/profile/Profile';
+import React, { useEffect, useState } from 'react';
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState(null)

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Paper = () => {
+const PaperId = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const Paper = () => {
   );
 };
 
-export default Paper;
+export default PaperId;

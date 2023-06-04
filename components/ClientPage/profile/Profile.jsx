@@ -6,7 +6,7 @@ import Prodile from "../../../assets/images/profile.png";
 import s from "../User.module.scss";
 import { Descriptions, Table } from "antd";
 
-const Profile = () => {
+const ProfileUser = () => {
   const [data, setdata] = useState([
     {
       company_name: "",
@@ -58,4 +58,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfileUser;

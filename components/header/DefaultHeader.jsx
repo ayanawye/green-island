@@ -7,7 +7,7 @@ import Burger from "../ui/burger/Burger";
 const DefaultHeader = () => {
   const navigation = [
     { id: 1, title: "О нас", path: "/" },
-    { id: 2, title: "Пункты приема", path: "/addresses" },
+    { id: 2, title: "Пункты приема", path: "/address" },
     { id: 3, title: "Новости", path: "/news" },
     { id: 4, title: "Для вас", path: "/rules" },
   ];

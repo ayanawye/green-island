@@ -1,4 +1,4 @@
-const offer = () => {
+const Offer = () => {
   return (
     <div>
       jnjf
@@ -6,4 +6,4 @@ const offer = () => {
   );
 };
 
-export default offer;
+export default Offer;
