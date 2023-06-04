@@ -10,7 +10,7 @@
   }
 }
 .top {
-  padding: 0 2%;
+  padding: 1vh 2%;
   height: 100%;
   @include flex-base(center, space-between);
   border-bottom: 1px solid $light-color;
@@ -24,6 +24,9 @@
 }
 .image {
   @extend .image-50;
+}
+.img{
+  @extend .image-size;
 }
 .list {
   padding: 20px;
@@ -50,4 +53,10 @@
 }
 .hoverlink{
   opacity: 0;
+}
+
+@media (max-width: 1500px){
+  .top{
+    padding: 1vh 5%;
+  }
 }

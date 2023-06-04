@@ -37,6 +37,7 @@
     }
   }
 }
+
 .home{
   background-color: $background-green;
   &__content{
@@ -58,13 +59,40 @@
       color: $white-color;
     }
   }
-  ul{
-    margin-top: 3vh;
-  }
   li{
     margin-top: 5vh;
     @include description;
     color: $white-color;
   }
+}
 
+@media (max-width: 1500px){
+  .home{
+    .image{
+      width: 80%;
+    }
+  }
+}
+@media (max-width: 1300px){
+  .home{
+    .image{
+      width: 90%;
+      height: 45vh;
+    }
+  }
+}
+@media (max-width: 1100px){
+  .home{
+    .image{
+      width: 95%;
+      height: 40vh;
+    }
+  }
+}
+@media (max-width: 1000px){
+  .home{
+    .image{
+      width: 100%;
+    }
+  }
 }

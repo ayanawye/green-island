@@ -14,9 +14,9 @@ const SortingItem = ({ material, animation }) => {
       <div className={s.content}>
         <div className={s.top}>
           <div className={s.top__left}>
-            <div className={s.image}>
+            {/* <div className={s.image}>
               <img className={s.img} src={material.src} alt="book" />
-            </div>
+            </div> */}
             <p className={s.title}>{material.title}</p>
           </div>
           <Link href="/paper" className={s.image}>

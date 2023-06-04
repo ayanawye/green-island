@@ -19,7 +19,6 @@ const CreateApplication = ({ data, close, open }) => {
       ...values,
       status: "На рассмотрении",
       date: `${day}-${month}-${year}`,
-      id: 4,
     });
     form.resetFields();
     close();

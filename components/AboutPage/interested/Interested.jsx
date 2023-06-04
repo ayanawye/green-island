@@ -5,6 +5,7 @@ import Laptop from "../../../assets/images/laptop.png";
 import Statistic from "../../../assets/images/service.png";
 import Girl from "../../../assets/images/reading.png";
 import { motion } from "framer-motion";
+import Circle from "../../../assets/images/circle_text.png";
 
 const Interested = () => {
   return (
@@ -15,15 +16,17 @@ const Interested = () => {
           Основные деятельности <span>GreenIsland</span>
         </h1>
         <motion.div
-         className={s.svg}
-         animate={{rotate: 360}}
-         transition={{
-          ease: "linear",
-          duration: 20,
-          repeat: Infinity,
-          delay: .200,
-         }}
-        />
+          className={s.svg}
+          animate={{ rotate: 360 }}
+          transition={{
+            ease: "linear",
+            duration: 20,
+            repeat: Infinity,
+            delay: 0.2,
+          }}
+        >
+          <Image src={Circle} className={s.img} />
+        </motion.div>
         <div className={s.cards}>
           <div className={s.card}>
             <div className={s.image}>

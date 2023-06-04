@@ -15,7 +15,6 @@
   height: 60px;
 }
 .content {
-  // @extend .flex-aling;
   height: 100%;
   display: flex;
   justify-content: space-between;
@@ -32,6 +31,9 @@
     @extend .image-size;
   }
 }
+.navigation{
+  display: contents;
+}
 .link {
   margin-right: 35px;
   transition: 0.3s;
@@ -41,4 +43,10 @@
   transition: 0.3s;
   font-weight: 500;
   margin-right: 35px;
+}
+
+@media (max-width: 1000px){
+  .navigation{
+    display: none;
+  }
 }

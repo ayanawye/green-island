@@ -8,7 +8,7 @@ const Layout = ({ children }) => {
   const { pathname } = useRouter();
   
   useEffect(() => {
-    if (pathname === "/regist" || pathname === "/login") {
+    if (pathname === "/regist" || pathname === "/login" || pathname === "/reset") {
       setShow(false);
     } else{
       return setShow(true)

@@ -20,7 +20,6 @@ const Benefit = () => {
     <motion.section
       initial="hidden"
       whileInView="visible"
-      viewport={{once: true}}
       className={s.benefit}
     >
       <div className={s.container}>

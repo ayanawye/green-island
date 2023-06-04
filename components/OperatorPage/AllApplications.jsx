@@ -2,17 +2,19 @@ import { Table, message } from "antd";
 import { useEffect, useState } from "react";
 import MyBtn from "../ui/button/MyBtn";
 import { getAllApplications } from "@/requests/Applications";
+import s from './OperatorPage.module.scss';
 
 const AllApplications = () => {
   const [applications, setApplication] = useState([
     { id: 1, date: "10-02-2023", type: "Вынести мусор", address: "Rekbr, 2/4" },
+    { id: 2, date: "10-02-2023", type: "Вынести мусор", address: "Rekbr, 2/4" },
   ]);
 
   useEffect(() => {
-    const resp = JSON.parse(localStorage.getItem('userInfo'))
-    const access = resp.access
-    getAllApplications(`/applications/`, access, setApplication)
-  },[])
+    const resp = JSON.parse(localStorage.getItem("userInfo"));
+    const access = resp.access;
+    // getAllApplications(`/applications/`, access, setApplication);
+  }, []);
 
   const takeApplication = (record) => {
     setApplication(applications.filter((e) => e.id !== record.id));
@@ -25,7 +27,7 @@ const AllApplications = () => {
       },
     });
   };
-  
+
   const columns = [
     {
       title: "№",
@@ -59,9 +61,11 @@ const AllApplications = () => {
   ];
 
   return (
-    <div>
-      <Table dataSource={applications} columns={columns} rowKey="id" />;
-    </div>
+    <section className={s.section}>
+      <div className={s.container}>
+        <Table className={s.table} dataSource={applications} columns={columns} rowKey="id" />
+      </div>
+    </section>
   );
 };
 

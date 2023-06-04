@@ -1,39 +1,60 @@
-@import '../../../styles/variables';
+@import "../../../styles/variables";
 
-.addresses{
+.addresses {
   border-top: 1px solid $accent-color;
-  .container{
-    padding: 2% 4%;
+  padding: 2% 4%;
+  .container {
     @include container;
   }
-  .title{
+  .title {
     @include mid-title;
   }
-  .desc{
+  .desc {
     @include description;
   }
-  .address{
-    margin-top: 60px;
+  .address {
+    margin-top: 6vh;
+    display: flex;
+    flex-direction: column;
+    row-gap: 1vh;
   }
-  .card{
+  .card {
     @include little-description;
-    @include grid-column2;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     padding: 1%;
     border: 1px solid $accent-color;
     margin-bottom: 1%;
-    &__schedule{
+    &__schedule {
       color: rgba(0, 0, 0, 0.7);
     }
-    &__phone{
+    &__phone {
       color: $accent-color;
     }
   }
-  .flex{
-    @include flex-base(center, space-around)
+  .flex {
+    @include flex-base(center, space-around);
   }
-  .map{
+  .map {
     margin-top: 50px;
     width: 100%;
     height: 500px;
+  }
+}
+
+@media (max-width: 1050px) {
+  .addresses {
+    padding: 2vh 4%;
+    .address{
+      margin-top: 4vh;
+      row-gap: 2vh;
+    }
+    .card {
+      grid-template-columns: repeat(1, 1fr);
+      row-gap: 1vh
+    }
+    .flex {
+    @include flex-base(center, space-between);
+  }
   }
 }

@@ -25,7 +25,7 @@ const Contact = () => {
                 <h4 className={s.right__title}>Мы всегда на связи</h4>
                 <div className={s.detail}>
                   <div className={s.image}>
-                    <Image src={Location} alt='location-logo' placeholder='blur' />
+                    <Image className={s.img} src={Location} alt='location-logo' placeholder='blur' />
                   </div>
                   <p>г.Бишкек, ул.Токтогула 125,
                     бц/ Avangard
@@ -33,7 +33,7 @@ const Contact = () => {
                 </div>
                 <div className={s.detail}>
                   <div className={s.image}>
-                    <Image src={PhoneCall} alt='call-logo' placeholder='blur' />
+                    <Image className={s.img} src={PhoneCall} alt='call-logo' placeholder='blur' />
                   </div>
                   <div className={s.number}>
                     <a href="tel:+996708780274">+996708780274</a>
@@ -43,7 +43,7 @@ const Contact = () => {
                 </div>
                 <div className={s.detail}>
                   <div className={s.image}>
-                    <Image src={Chat} alt='chat-logo' placeholder='blur' />
+                    <Image className={s.img} src={Chat} alt='chat-logo' placeholder='blur' />
                   </div>
                   <a href="mailto:greenLife@gmail.com">E-mail: greenLife@gmail.com</a>
                 </div>

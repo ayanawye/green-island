@@ -1,27 +1,81 @@
 @import "../../../styles/variables";
 
-
-.product{
+.product {
   background-color: $light-color;
   color: $white-color;
-  padding: 2%;
+  padding: 5vh 0;
 }
-.text{
+.text {
   padding: 0 10% 3vh;
 }
-.section__name{
+.section__name {
   @extend .section-name;
   margin-bottom: 10px;
 }
-.title{
+.title {
   @include mid-title;
 }
-.img{
-  min-width: 10%;
-  height: 6 0vh;
+.img {
+  height: 60vh;
   padding: 5%;
 }
-.image{
+.image {
   @extend .image-size;
   object-fit: cover;
+}
+@media (max-width: 1400px) {
+  .img {
+    height: 55vh;
+  }
+  .text {
+    padding: 0 7% 2vh;
+  }
+}
+@media (max-width: 1200px) {
+  .img {
+    height: 45vh;
+    padding: 3%;
+  }
+  .text {
+    padding: 0 6% 2vh;
+  }
+}
+@media (max-width: 1000px) {
+  .img {
+    height: 40vh;
+    padding: 3%;
+  }
+  .text {
+    padding: 0 5% 2vh;
+  }
+}
+@media (max-width: 800px) {
+  .img {
+    height: 30vh;
+    padding: 3%;
+  }
+  .text {
+    padding: 0 4% 2vh;
+  }
+  .product{
+    padding: 4vh 0;
+  }
+}
+@media (max-width: 600px) {
+  .img {
+    height: 25vh;
+    padding: 3%;
+  }
+  .product{
+    padding: 3vh 0;
+  }
+}
+@media (max-width: 500px) {
+  .img {
+    height: 20vh;
+    padding: 3%;
+  }
+  .product{
+    padding: 3vh 0;
+  }
 }
