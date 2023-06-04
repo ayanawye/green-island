@@ -34,7 +34,7 @@ const NewsList = () => {
           </div>
           <div className={s.cards_grid}>
             {news.map(el => (
-              <NewsCard el={el} />
+              <NewsCard el={el} key={el.id} />
             ))}
           </div>
         </div>

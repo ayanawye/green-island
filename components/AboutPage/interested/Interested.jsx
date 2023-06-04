@@ -25,7 +25,7 @@ const Interested = () => {
             delay: 0.2,
           }}
         >
-          <Image src={Circle} className={s.img} />
+          <Image src={Circle} alt="image" className={s.img} />
         </motion.div>
         <div className={s.cards}>
           <div className={s.card}>
