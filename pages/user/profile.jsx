@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Profile from '@/components/ClientPage/profile/Profile';
+import ProfileUser from '@/components/ClientPage/profile/Profile';
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState(null)
@@ -12,7 +12,7 @@ const Profile = () => {
   return (
     <>
     {userInfo
-    ? <Profile />
+    ? <ProfileUser />
     : ""}
     </>
   );
