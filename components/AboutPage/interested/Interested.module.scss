@@ -67,10 +67,14 @@
   width: 60%;
   height: 45%;
   @extend .center;
-  .img {
-    width: 100%;
-    height: 100%;
-  }
+}
+.img {
+  width: 100%;
+  height: 100%;
+}
+.circle{
+  width: auto;
+  height: auto;
 }
 
 @media (max-width: 1600px) {

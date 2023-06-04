@@ -1,9 +1,9 @@
-const done = () => {
+const Done = () => {
   return (
     <div>
-      
+      vghjk
     </div>
   );
 };
 
-export default done;
+export default Done;

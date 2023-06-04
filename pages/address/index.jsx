@@ -1,9 +1,9 @@
 import Addresses from '@/components/AboutPage/addresses/Addresses';
 
-const addresses = () => {
+const Address = () => {
   return (
     <Addresses />
   );
 };
 
-export default addresses;
+export default Address;

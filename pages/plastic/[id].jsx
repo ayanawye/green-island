@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Plastic = () => {
+const PlasticId = () => {
   return (
     <div>
       
@@ -8,4 +8,4 @@ const Plastic = () => {
   );
 };
 
-export default Plastic;
+export default PlasticId;

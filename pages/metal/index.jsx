@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-const index = () => {
+const Index = () => {
   return (
     <>
       <Head>
@@ -13,4 +13,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
