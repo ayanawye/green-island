@@ -1,18 +1,21 @@
 import { useEffect, useState } from "react";
 import s from "./OperatorPage.module.scss";
 import { Table, Button } from "antd";
+import { changeStatus, inProcess, takeBrigade } from "@/requests/GetBrigadeList";
 
-const BrigadeModal = ({ close, open }) => {
-  const [brigadesData, setBrigadeData] = useState([
-    { id: 1, name: "Бригада 1", requestCount: 5 },
-    { id: 2, name: "Бригада 3", requestCount: 7 },
-    { id: 3, name: "Бригада 3", requestCount: 7 },
-    { id: 4, name: "Бригада 3", requestCount: 7 },
-  ]);
+const BrigadeModal = ({ close, open, data, id }) => {
+  const [access, setAccess] = useState(null);
+
+  useEffect(() => {
+    const resp = JSON.parse(localStorage.getItem("userInfo"));
+    const access = resp.access;
+    setAccess(access);
+  }, []);
 
   const handleBrigadeSelect = (brigade) => {
-    console.log(brigade);
-    // бригада выброна
+    const brigadeId = brigade.id;
+    takeBrigade(`${id}/`, brigadeId, access);
+    close()
   };
 
   const columns = [
@@ -23,13 +26,13 @@ const BrigadeModal = ({ close, open }) => {
     },
     {
       title: "Название бригады",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "email",
+      key: "email",
     },
     {
       title: "Количество заявок",
-      dataIndex: "requestCount",
-      key: "requestCount",
+      dataIndex: "application_count",
+      key: "application_count",
     },
     {
       title: "Выбрать",
@@ -43,12 +46,13 @@ const BrigadeModal = ({ close, open }) => {
       ),
     },
   ];
+
   if (!open) return null;
 
   return (
     <div className={s.modal} onClick={close}>
       <div className={s.modal__content} onClick={(e) => e.stopPropagation()}>
-        <Table dataSource={brigadesData} columns={columns} rowKey="id" />;
+        <Table dataSource={data} columns={columns} rowKey="id" />
       </div>
     </div>
   );

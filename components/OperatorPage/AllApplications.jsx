@@ -1,31 +1,24 @@
-import { Table, message } from "antd";
+import { Button, Table, Typography, message } from "antd";
 import { useEffect, useState } from "react";
 import MyBtn from "../ui/button/MyBtn";
-import { getAllApplications } from "@/requests/Applications";
+import { assignApplication, getAllApplications } from "@/requests/Applications";
 import s from './OperatorPage.module.scss';
 
+
+const { Text } = Typography;
 const AllApplications = () => {
-  const [applications, setApplication] = useState([
-    { id: 1, date: "10-02-2023", type: "Вынести мусор", address: "Rekbr, 2/4" },
-    { id: 2, date: "10-02-2023", type: "Вынести мусор", address: "Rekbr, 2/4" },
-  ]);
+  const [applications, setApplication] = useState([]);
+  const [access, setAccess] = useState(null)
 
   useEffect(() => {
     const resp = JSON.parse(localStorage.getItem("userInfo"));
     const access = resp.access;
-    // getAllApplications(`/applications/`, access, setApplication);
+    setAccess(access)
+    getAllApplications(`/all_applications/`, access, setApplication);
   }, []);
 
   const takeApplication = (record) => {
-    setApplication(applications.filter((e) => e.id !== record.id));
-    message.open({
-      type: "success",
-      content: "Добавили в ваши заявки",
-      style: {
-        marginTop: "5%",
-        fontSize: "20px",
-      },
-    });
+    assignApplication(`/operator/${record.id}/my_applications/`, access, record, setApplication, applications)
   };
 
   const columns = [
@@ -36,8 +29,13 @@ const AllApplications = () => {
     },
     {
       title: "Дата",
-      dataIndex: "date",
-      key: "date",
+      dataIndex: "started_create",
+      key: "started_create",
+      render: (started_create) => (
+        <Text ellipsis={{ tooltip: started_create }}>
+          {started_create.length > 10 ? `${started_create.slice(0, 10)}` : started_create}
+        </Text>
+      ),
     },
     {
       title: "Тип заявки",
@@ -45,17 +43,22 @@ const AllApplications = () => {
       key: "type",
     },
     {
-      title: "Адрес",
-      dataIndex: "address",
-      key: "address",
+      title: "Комментарий",
+      dataIndex: "comment",
+      key: "comment",
+      render: (comment) => (
+        <Text ellipsis={{ tooltip: comment }}>
+          {comment.length > 20 ? `${comment.slice(0, 20)}...` : comment}
+        </Text>
+      ),
     },
     {
       title: "Действие",
       key: "action",
       render: (text, record) => (
-        <MyBtn type="primary" onClick={() => takeApplication(record)}>
+        <Button type="primary" style={{width: "80%"}} onClick={() => takeApplication(record)}>
           Взяться за работу
-        </MyBtn>
+        </Button>
       ),
     },
   ];

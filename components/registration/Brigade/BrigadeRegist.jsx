@@ -13,7 +13,7 @@ const validationSchema = Yup.object().shape({
     .required("Обязательное поле"),
   brigades_name: Yup.string().required("Обязательное поле"),
   brigades_list: Yup.string().required("Обязательное поле"),
-  phone: Yup.string().required("Обязательное поле").length(13, "Не валидный номер телефона"),
+  phone: Yup.string().required("Обязательное поле!").matches(/^\+[0-9]{12}$/, "Не валидный номер телефона"),
 });
 
 

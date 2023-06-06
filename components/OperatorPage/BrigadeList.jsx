@@ -1,24 +1,10 @@
 import { Table } from "antd";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import s from './OperatorPage.module.scss';
+import { getBrigadeList } from "@/requests/GetBrigadeList";
 
 const BrigadeList = () => {
-  const [brigades, setBrigades] = useState([
-    {
-      id: 2,
-      name: "Бригада 3",
-      requestDayCount: 5,
-      requestMonthCount: 33,
-      call: "0708780274",
-    },
-    {
-      id: 1,
-      name: "Бригада 1",
-      requestDayCount: 5,
-      requestMonthCount: 21,
-      call: "0708780274",
-    },
-  ]);
+  const [brigades, setBrigades] = useState([]);
   const columns = [
     {
       title: "№",
@@ -27,31 +13,39 @@ const BrigadeList = () => {
     },
     {
       title: "Название бригады",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "brigades_name",
+      key: "brigades_name",
     },
     {
       title: "Количество заявок за сегодня",
-      dataIndex: "requestDayCount",
-      key: "requestDayCount",
+      dataIndex: "application_count",
+      key: "application_count",
     },
     {
-      title: "Количество заявок за месяц",
-      dataIndex: "requestMonthCount",
-      key: "requestMonthCount",
+      title: "Почта",
+      dataIndex: "email",
+      key: "email",
     },
     {
       title: "Позвонить",
-      key: "call",
+      key: "phone",
       render: (text, record) => (
-        <a href={`tel:${record.call}`}>{record.call}</a>
+        <a href={`tel:${record.phone}`}>{record.phone}</a>
       ),
     },
   ];
+
+
+  useEffect(() => {
+    const resp = JSON.parse(localStorage.getItem('userInfo'))
+    const access = resp.access
+    getBrigadeList(`/brigades/`, access, setBrigades)
+  }, [])
+
   return (
     <section className={s.section}>
       <div className={s.container}>
-        <Table className={s.table} dataSource={brigades} columns={columns} rowKey="id" />;
+        <Table className={s.table} dataSource={brigades} columns={columns} rowKey="id" />
       </div>
     </section>
   );

@@ -12,7 +12,7 @@ const validationSchema = Yup.object().shape({
     .oneOf([Yup.ref("password"), null], "Пароли не совпадают")
     .required("Обязательное поле"),
   full_name: Yup.string().required("Обязательное поле"),
-  phone: Yup.string().required("Обязательное поле").length(13, "Не валидный номер телефона"),
+  phone: Yup.string().required("Обязательное поле!").matches(/^\+[0-9]{12}$/, "Не валидный номер телефона"),
 });
 
 const OperatorRegist = () => {
