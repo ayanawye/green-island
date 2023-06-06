@@ -1,7 +1,7 @@
 @import "../../../styles/variables";
 
 .benefit {
-  padding: 100px 0;
+  padding: 15vh 0;
 }
 .container {
   @include container;
@@ -9,7 +9,7 @@
 .content {
   border: 1px solid $accent-color;
   position: relative;
-  padding: 70px 100px;
+  padding: 7vh 10%;
 }
 .text {
   top: -10px;
@@ -30,7 +30,7 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
-  row-gap: 40px;
+  row-gap: 2vh;
   column-gap: 110px;
 }
 .card {
@@ -40,5 +40,54 @@
   &__desc {
     font-size: 20px;
     line-height: 29px;
+  }
+}
+
+@media (max-width: 1700px) {
+  .benefit {
+    padding: 10vh 0;
+  }
+}
+@media (max-width: 1600px) {
+  .content {
+    padding: 5vh 8%;
+  }
+}
+@media (max-width: 1000px) {
+  .content {
+    padding: 2vh 8%;
+  }
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, auto);
+    row-gap: 4vh;
+    column-gap: 10%;
+  }
+}
+@media (max-width: 700px) {
+  .content {
+    padding: 1vh 5%;
+  }
+  .title {
+    top: -25px;
+    padding: 0 20px;
+    left: -20px;
+  }
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, auto);
+    row-gap: 4vh;
+    column-gap: 7%;
+  }
+}
+@media (max-width: 500px) {
+  .content {
+    padding: 1vh 5%;
+  }
+  .cards {
+    grid-template-columns: repeat(1, 1fr);
+    grid-template-rows: repeat(6, auto);
+    row-gap: 4vh;
+    column-gap: 7%;
   }
 }

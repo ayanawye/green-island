@@ -1,0 +1,21 @@
+@import "../../styles/variables";
+
+.section{
+  padding: 6vh 0;
+}
+.container{
+  @include container;
+}
+.content{
+  @include grid-column2;
+}
+.image{
+  width: 40%;
+  margin: 0 auto;
+  .img{
+    @extend .image-size;
+  }
+}
+.btn{
+  width: 50%;
+}

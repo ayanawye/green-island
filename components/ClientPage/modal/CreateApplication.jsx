@@ -1,28 +1,26 @@
 import { Form, Input, Select, Button, Modal } from "antd";
 import s from "./Modal.module.scss";
+import { createApplication } from "@/requests/Applications";
+import { useEffect, useState } from "react";
 
 const { Option } = Select;
 
-const CreateApplication = ({ data, close, open }) => {
+const CreateApplication = ({ close, open }) => {
   const [form] = Form.useForm();
+  const [userData, setUserData] = useState([])
   const handleModalClose = () => {
     form.resetFields();
     close();
   };
-  const today = new Date();
-  const day = String(today.getDate()).padStart(2, "0");
-  const month = String(today.getMonth() + 1).padStart(2, "0");
-  const year = today.getFullYear();
+  useEffect(() => {
+    const resp = JSON.parse(localStorage.getItem("userInfo"))
+    const access = resp.access
+    setUserData(access)
+  }, [])
 
   const handleModalCreate = (values) => {
-    data({
-      ...values,
-      status: "На рассмотрении",
-      date: `${day}-${month}-${year}`,
-      id: 4,
-    });
+    createApplication(`/client/application/create/`, values, userData, close)
     form.resetFields();
-    close();
   };
 
   if (!open) return null;
@@ -67,9 +65,9 @@ const CreateApplication = ({ data, close, open }) => {
               ]}
             >
               <Select>
-                <Option value="Вывести мусор"></Option>
-                <Option value="Установить экобокс"></Option>
-                <Option value="Демонтировать экобокс"></Option>
+                <Option value="Вывоз мусора"></Option>
+                <Option value="Установка экобокса"></Option>
+                <Option value="Демонтаж экобокса"></Option>
               </Select>
             </Form.Item>
           </Form>

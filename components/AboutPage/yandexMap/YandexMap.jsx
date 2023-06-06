@@ -1,15 +1,3 @@
-import {
-  GeolocationControl,
-  Map,
-  Placemark,
-  TrafficControl,
-  YMaps,
-  ZoomControl,
-} from "@pbe/react-yandex-maps";
-import s from "../contacts/Contact.module.scss";
-import Cookies from "js-cookie";
-import { useEffect } from "react";
-
 const YandexMap = () => (
   <div style={{position:'relative',overflow:'hidden', height: "100%"}}>
     <a

@@ -1,14 +1,38 @@
-import React from 'react';
-import SortingItem from '../materialItem/SortingItem';
-import s from './SortingList.module.scss';
+import React from "react";
+import SortingItem from "../materialItem/SortingItem";
+import s from "./SortingList.module.scss";
+import { motion } from "framer-motion";
 
-const SortingList = ({materials}) => {
+const textAnimation = {
+  hidden: {
+    y: 100,
+    opacity: 0,
+  },
+  visible: custom => ({
+    y: 0,
+    opacity: 1,
+    transition: {
+      delay: custom * 0.2,
+    }
+  }),
+};
+
+const SortingList = ({ materials }) => {
   return (
-    <div className={s.cards}>
-      {materials.map(material =>(
-        <SortingItem key={material.id} material={material}/>
+    <motion.div 
+     initial="hidden" 
+     whileInView="visible"
+     className={s.cards}
+    >
+      {materials.map((material, index) => (
+        <SortingItem
+          custom={index + 1}
+          animation={textAnimation}
+          key={material.id}
+          material={material}
+        />
       ))}
-    </div>
+    </motion.div>
   );
 };
 

@@ -1,7 +1,7 @@
 import Auth from '@/components/auth/Auth';
 import React from 'react';
 
-const index = () => {
+const Lndex = () => {
   return (
     <div>
       <Auth />
@@ -9,4 +9,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Lndex;

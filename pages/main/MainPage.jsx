@@ -6,12 +6,20 @@ import Partners from '@/components/AboutPage/partners/Partners';
 import Benefit from '@/components/AboutPage/benefits/Benefit';
 import Products from '@/components/AboutPage/products/Products';
 import Contact from '@/components/AboutPage/contacts/Contact';
-import Videoplayer from '@/components/videoPlayer/Videoplayer';
+import Link from 'next/link';
+import MyBtn from '@/components/ui/button/MyBtn';
 
 const MainPage = () => {
   return (
     <>
-      <div className={s.hero}></div>
+      <div className={s.hero}>
+        <div className={s.content}>
+        <h1>Берегите природу вместе с нами</h1>
+        <Link className={s.link} href="/regist">
+          <MyBtn>Cтать частью зеленого города</MyBtn>
+        </Link>
+        </div>
+      </div>
       <About />
       <Interested />
       <Service />
@@ -19,7 +27,6 @@ const MainPage = () => {
       <Benefit />
       <Products />
       <Contact />
-      {/* <Videoplayer /> */}
     </>
   );
 };

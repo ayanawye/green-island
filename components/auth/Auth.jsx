@@ -1,79 +1,85 @@
-import s from "./Auth.module.scss";
-import { ErrorMessage, Form, Formik } from "formik";
-import * as Yup from "yup";
-import Image from "next/image";
-import MyField from "../ui/input/MyField";
-import Logo from "../../assets/images/logo2.png";
-import MyBtn from "../ui/button/MyBtn";
-import { BASE_URL } from "@/base_url/BASE_URL";
-import { useRouter } from "next/router";
-import { authRequests } from "@/requests/RegistLogin";
 import { useEffect, useState } from "react";
+import { Form, Input } from "antd";
+import { useFormik } from "formik";
+import { authRequests } from "@/requests/RegistLogin";
+import * as Yup from "yup";
+import s from "./Auth.module.scss";
+import MyBtn from "../../components/ui/button/MyBtn";
+import Image from "next/image";
+import Link from "next/link";
+import Logo from "../../assets/images/logo2.png";
+import Loading from "@/components/ui/loading/Loading";
+import { useRouter } from "next/router";
 
-const validationSchema = Yup.object({
-  email: Yup.string().email("Не валидная почта").required("Обязательное поле"),
-  password: Yup.string().required("Обязательное поле"),
+const validationSchema = Yup.object().shape({
+  email: Yup.string().email("Не валидная почта").required("Обязательное поле!"),
+  password: Yup.string()
+    .required("Обязательное поле")
+    
 });
 
 const Auth = () => {
   const router = useRouter()
-  const userValues = {
-    email: "",
-    password: "",
-  }
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState([])
 
-  const handleSubmit = async (values) => {
-    authRequests(`${BASE_URL}/login/`, values, router)
-  }
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: validationSchema,
+    onSubmit: async (values) => {
+      authRequests(`/login/`, values, router, setLoading, error, setError)
+    },
+  });
 
   return (
     <div className={s.regist}>
       <div className={s.reg_container}>
         <div className={s.image}>
-          <Image priority className={s.img} src={Logo} alt="Logo" />
+          <Image className={s.img} src={Logo} alt="Logo" />
         </div>
-        <div className={s.form}>
-          <Formik
-            initialValues={userValues}
-            validationSchema={validationSchema}
-            onSubmit={handleSubmit}
+        <Form
+          layout="vertical"
+          onFinish={formik.handleSubmit}
+          className={s.form}
+        >
+          <h1 className={s.title}>Войти</h1>
+          <Form.Item
+            label="Email"
+            hasFeedback
+            validateStatus={formik.errors.email ? "error" : ""}
+            help={formik.errors.email}
           >
-            <Form className={s.formik}>
-              <h1 className={s.title}>Войти</h1>
-              <div className={s.input}>
-                <MyField
-                  placeholder="Email"
-                  type="email"
-                  id="email"
-                  name="email"
-                />
-                <ErrorMessage
-                  name="email"
-                  component="div"
-                  className="error-message"
-                  style={{ color: "red" }}
-                />
-              </div>
-              <div className={s.input}>
-                <MyField
-                  placeholder="Пароль"
-                  type="password"
-                  id="password"
-                  name="password"
-                />
-                <ErrorMessage
-                  name="password"
-                  component="div"
-                  className="error-message"
-                  style={{ color: "red" }}
-                />
-              </div>
-              <div className={s.btn}>
-                <MyBtn type="submit">Register</MyBtn>
-              </div>
-            </Form>
-          </Formik>
-        </div>
+            <Input
+              name="email"
+              value={formik.values.email}
+              onChange={formik.handleChange}
+            />
+          </Form.Item>
+
+          <Form.Item
+            label="Пароль"
+            hasFeedback
+            validateStatus={formik.errors.password ? "error" : ""}
+            help={formik.errors.password}
+          >
+            <Input.Password
+              name="password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+            />
+          </Form.Item>
+
+          <Form.Item>
+            {loading && <Loading />}
+            <div className={s.btn}>
+              <MyBtn type="submit">Войти</MyBtn>
+            </div>
+            {error.length >= 3 ? <p style={{marginTop: "2vh"}}>Забыли пароль? <Link href="/reset" onClick={()=>{setError([])}}  style={{color: "#215700"}}>Восстановить</Link></p> : ''}
+          </Form.Item>
+        </Form>
       </div>
     </div>
   );

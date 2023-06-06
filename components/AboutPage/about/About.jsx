@@ -13,7 +13,7 @@ const About = () => {
             <h1 className={s.title}>Компания <span>GreenIsland</span></h1>
             <p className={s.desc}>предоставляет полный комплекс услуг по сбору и вывозу вторсырья для последующей переработки</p>
             <div className={s.image}>
-              <Image src={Trash} alt="" />
+              <Image src={Trash} alt="ss" />
             </div>
           </div>
           <div className={s.right}>

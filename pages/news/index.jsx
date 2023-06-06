@@ -1,3 +1,4 @@
+import NewsList from "@/components/AboutPage/newsList/NewsList";
 import Head from "next/head";
 
 const News = () => {
@@ -7,7 +8,7 @@ const News = () => {
         <title>Новости</title>
       </Head>
       <div>
-        news
+        <NewsList/>
       </div>
     </>
   );

@@ -1,11 +1,12 @@
+import BrigadeList from '@/components/OperatorPage/BrigadeList';
 import React from 'react';
 
-const brig = () => {
+const Brig = () => {
   return (
     <div>
-      kjfekrfkwewekjd
+      <BrigadeList />
     </div>
   );
 };
 
-export default brig;
+export default Brig;

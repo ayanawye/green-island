@@ -1,8 +1,9 @@
+import ProfileUser from '@/components/ClientPage/profile/Profile';
 import React, { useEffect, useState } from 'react';
-import Profile from '@/components/ClientPage/profile/Profile';
 
-const profile = () => {
+const Profile = () => {
   const [userInfo, setUserInfo] = useState(null)
+
   useEffect(() => {
     const resp = JSON.parse(localStorage.getItem("userInfo"))
     setUserInfo(resp)
@@ -11,10 +12,10 @@ const profile = () => {
   return (
     <>
     {userInfo
-    ? <Profile />
+    ? <ProfileUser />
     : ""}
     </>
   );
 };
 
-export default profile;
+export default Profile;

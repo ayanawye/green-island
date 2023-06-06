@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Error from '../404';
 
-const profile = () => {
+const Profile = () => {
   const [userInfo, setUserInfo] = useState(null)
   useEffect(() => {
     const resp = JSON.parse(localStorage.getItem("userInfo"))
@@ -16,4 +16,4 @@ const profile = () => {
   );
 };
 
-export default profile;
+export default Profile;
