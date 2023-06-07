@@ -5,6 +5,7 @@ import { myApplications } from '@/requests/Applications';
 const Done = () => {
   const [userInfo, setUserInfo] = useState(null)
   const [applications, setApplication] = useState([]);
+
   useEffect(() => {
     const resp = JSON.parse(localStorage.getItem("userInfo"))
     setUserInfo(resp)
@@ -13,10 +14,11 @@ const Done = () => {
   }, [])
 
   const filteredApplications = applications.filter(app => app.finished_by_brigade === true)
+
   return (
     <>
     {userInfo
-    ? <BrigadeApplication applications={filteredApplications} />
+    ? <BrigadeApplication  applications={filteredApplications} />
     : ""}
     </>
   );

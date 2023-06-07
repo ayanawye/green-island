@@ -2,20 +2,22 @@ import React, { useEffect, useState } from "react";
 import { Table, Modal, Form, Input, Button, Select, Typography } from "antd";
 import MyBtn from "@/components/ui/button/MyBtn";
 import CreateApplication from "../modal/CreateApplication";
-import { createApplication, getAllApplications, myApplications } from "@/requests/Applications";
+import { createApplication, myApplications } from "@/requests/Applications";
 import { changeBrigadeStatus, changeStatus } from "@/requests/GetBrigadeList";
+import s from "../User.module.scss";
 
 const { confirm } = Modal;
 const { Option } = Select;
 const { Text } = Typography;
 
 const UserList = () => {
-  const [initialData, setInitialData] = useState([]);
-  const [data, setData] = useState(initialData);
+  const [data, setData] = useState([]);
+  const [filterData, setDataFilter] = useState([])
   const [userData, setUserData] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [modal, setModal] = useState(false);
+  const [changeAppStatus, setChandeAppStatus] = useState(false);
   const [access, setAccess] = useState(null);
   const [form] = Form.useForm();
 
@@ -24,21 +26,16 @@ const UserList = () => {
     const access = resp.access;
     setAccess(access);
     setUserData(resp);
-    myApplications( access, setData);
-  }, [modal]);
+    myApplications(access, setData);
+  }, [changeAppStatus, modal]);
 
-  const handleDelete = (record) => {
-    confirm({
-      title: "Удалить элемент?",
-      onOk() {
-        const updatedData = data.filter((item) => item.id !== record.id);
-        setData(updatedData);
-        setSelectedItem(null);
-        setModalVisible(false);
-      },
-    });
-  };
-  const handleEdit = (record) => {
+  useEffect(()=>{
+    const newData = data.filter(item => item.finished_by_client !== true)
+    setDataFilter(newData)
+    console.log(newData);
+  }, [data])
+
+  const handleWatch = (record) => {
     setSelectedItem(record);
     setModalVisible(true);
     form.setFieldsValue(record);
@@ -51,13 +48,12 @@ const UserList = () => {
     const updatedData = data.map((item) =>
       item.id === selectedItem.id ? { ...item, ...values } : item
     );
-    setData(updatedData);
     setModalVisible(false);
     form.resetFields();
   };
   const finishApplication = (record) => {
     changeStatus(record.id, { finished_by_client: true }, access);
-    changeBrigadeStatus(record.brigade, {brigade_status: false}, access)
+    setChandeAppStatus("yes")
   };
 
   const columns = [
@@ -98,9 +94,9 @@ const UserList = () => {
         <div
           style={{ display: "flex", justifyContent: "center", columnGap: "4%" }}
         >
-          <Button onClick={() => handleEdit(record)}>Подробнее</Button>
+          <Button onClick={() => handleWatch(record)}>Подробнее</Button>
           <Button
-            disabled={record.status !== "В процессе"}
+            disabled={record.finished_by_client === true || record.status !== "В процессе"}
             type="primary"
             onClick={() => finishApplication(record)}
           >
@@ -115,38 +111,26 @@ const UserList = () => {
     createApplication("/client/application/create/", data, userData);
   };
 
-  const filterByStatus = (status) => {
-    const filtered = data.filter((item) => {
-      if (status === "Закрытые заявки") {
-        return item.status === "Выполнено";
-      } else if (status === "Активные заявки") {
-        return item.status === "В процессе" || item.status == "Новая";
-      }
-      return false;
-    });
-  };
-
   return (
-    <div>
-      <div>
-        <div>
-          <Button onClick={() => filterByStatus("Закрытые заявки")}>
-            Закрытые заявки
-          </Button>
-          <Button onClick={() => filterByStatus("Активные заявки")}>
-            Активные заявки
-          </Button>
+    <div className={s.section}>
+      <div className={s.container}>
+        <div className={s.flex} style={{ marginBottom: "2vh" }}>
+          <div style={{marginLeft: "5%"}}>
+            <p>Активные заявки</p>
+          </div>
+          <div>
+            <Button type="primary" onClick={() => setModal(true)}>
+              Создать новую заявку
+            </Button>
+            <CreateApplication
+              open={modal}
+              close={() => setModal(false)}
+              data={addApplication}
+            />
+          </div>
         </div>
-        <div>
-          <MyBtn onClick={() => setModal(true)}>Создать новую заявку</MyBtn>
-          <CreateApplication
-            open={modal}
-            close={() => setModal(false)}
-            data={addApplication}
-          />
-        </div>
+        <Table dataSource={filterData} columns={columns} rowKey="id" />
       </div>
-      <Table dataSource={data} columns={columns} rowKey="id" />
       <Modal
         open={modalVisible}
         title="Подробности элемента"
@@ -163,14 +147,6 @@ const UserList = () => {
           </Form.Item>
           <Form.Item name="comment" label="Комментарий">
             <Input.TextArea />
-          </Form.Item>
-          <Form.Item
-            style={{ display: "flex", justifyContent: "space-around" }}
-          >
-            <Button type="primary" htmlType="submit">
-              Сохранить
-            </Button>
-            <Button onClick={() => handleDelete(selectedItem)}>Удалить</Button>
           </Form.Item>
         </Form>
       </Modal>
