@@ -57,3 +57,38 @@
   font-size: 20px;
   margin-top: 1vh;
 }
+@media (max-width: 1200px){
+  .reg_container {
+    width: 40%;
+  }
+}
+@media (max-width: 900px){
+  .reg_container {
+    width: 45%;
+  }
+}
+@media (max-width: 800px){
+  .reg_container {
+    width: 55%;
+  }
+}
+@media (max-width: 550px){
+  .reg_container {
+    width: 60%;
+  }
+}
+@media (max-width: 500px){
+  .reg_container {
+    width: 65%;
+  }
+}
+@media (max-width: 450px){
+  .reg_container {
+    width: 70%;
+  }
+}
+@media (max-width: 400px){
+  .reg_container {
+    width: 80%;
+  }
+}
