@@ -9,7 +9,6 @@ export const getBrigadeList = async (endpoint, token, setApplication) => {
     });
     const data = await resp.data;
     setApplication(data);
-    console.log(data);
   } catch (e) {
     console.log(e.response);
   }
@@ -43,7 +42,7 @@ export const inProcess = async (id, token) => {
       headers: 
       { "Authorization": `Bearer ${token}`},
     });
-  const data = await resp.data.message
+  const data = await resp.data
   message.open({
     type: "success",
     content: `${data}`,
@@ -51,6 +50,7 @@ export const inProcess = async (id, token) => {
       marginTop: "100px"
     }
   })
+  console.log(data)
   } catch (e) {
     console.log(e.response);
   }
@@ -61,7 +61,7 @@ export const changeBrigadeStatus = async(id, dataStatus, token) => {
     const resp = await axios.patch(`${BASE_URL}/brigade/${id}/status/`, dataStatus,  {
       headers: { "Authorization": `Bearer ${token}` },
     });
-    const data = await resp.data.brigade_status;
+    const data = await resp.data;
     console.log(data)
   } catch (e) {
     console.log(e.response);
@@ -73,7 +73,7 @@ export const changeStatus = async(id, dataStatus, token) => {
     const resp = await axios.patch(`${BASE_URL}/change_status/${id}/`, dataStatus,  {
       headers: { "Authorization": `Bearer ${token}`, "Content-Type": "application/json" },
     });
-    const data = await resp.data.message;
+    const data = await resp.data;
     console.log(resp);
     message.open({
       type: "success",
@@ -83,6 +83,7 @@ export const changeStatus = async(id, dataStatus, token) => {
         fontSize: "20px",
       },
     });
+    console.log(data);
   } catch (e) {
     console.log(e.response);
   }

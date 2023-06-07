@@ -1,24 +1,21 @@
-import { BASE_URL } from "@/base_url/BASE_URL";
-import axios from "axios";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Prodile from "../../../assets/images/profile.png";
 import s from "../User.module.scss";
-import { Descriptions } from "antd";
+import { Button, Descriptions } from "antd";
 import { getProfile } from "@/requests/Profile";
-import MyBtn from "@/components/ui/button/MyBtn";
 import UpdateProfile from "../modal/UpdateProfile";
 
 const ProfileUser = () => {
   const [data, setdata] = useState(null);
   const [modal, setModal] = useState(false);
-  console.log(data);
+
   useEffect(() => {
     const resp = JSON.parse(localStorage.getItem("userInfo"));
     const access = resp.access;
     const id = resp.user_id;
     getProfile(`/client-profile/${id}/`, access, setdata);
-  }, []);
+  }, [modal]);
 
   return (
     <section className={s.section}>
@@ -49,7 +46,7 @@ const ProfileUser = () => {
                 </Descriptions.Item>
               </Descriptions>
               <div className={s.btn}>
-                <MyBtn onClick={() => setModal(true)}>Изменить</MyBtn>
+                <Button type="primary" onClick={() => setModal(!modal)}>Изменить</Button>
               </div>
             </div>
           )}

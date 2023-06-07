@@ -2,7 +2,7 @@ import React, { useEffect, useNavigate, useState } from "react";
 import s from "./Header.module.scss";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import Logo from "../../assets/images/logo2.png";
+import Logo from "../../assets/images/myLogo.png";
 import DefaultHeader from "./DefaultHeader";
 import UserHeader from "./UserHeader";
 import OperatorHeader from "./OperatorHeader";

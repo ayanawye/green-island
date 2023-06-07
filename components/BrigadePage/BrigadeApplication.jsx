@@ -1,10 +1,11 @@
-import { Button, Table, Typography } from "antd";
+import { Button, Form, Input, Modal, Table, Typography } from "antd";
 import { useEffect, useState } from "react";
 import {
   changeBrigadeStatus,
   changeStatus,
   inProcess,
 } from "@/requests/GetBrigadeList";
+import DetailsModal from "./DitailsModal";
 
 const { Text } = Typography;
 
@@ -21,10 +22,10 @@ const BrigadeApplication = ({applications}) => {
     inProcess(record.id, access)
     changeBrigadeStatus(record.brigade, {brigade_status: true}, access)
   };
-  
+
   const finishApplication = (record) => {
-    changeStatus(record.id, {finished_by_brigade: true, brigade_status: false}, access);
-    // changeBrigadeStatus(record.brigade, {brigade_status: false}, access)
+    changeStatus(record.id, {finished_by_brigade: true}, access);
+    changeBrigadeStatus(record.brigade, {brigade_status: false}, access)
   }
 
   const columns = [
@@ -52,13 +53,18 @@ const BrigadeApplication = ({applications}) => {
       title: "Адрес клиента",
       dataIndex: "client_address",
       key: "client_address",
+      render: (client_address) => (
+        <Text ellipsis={{ tooltip: client_address }}>
+          {client_address.replace(/[^a-zа-яё0-9+\s]/gi, "")}
+        </Text>
+      ),
     },
     {
       title: "Позвонить",
       dataIndex: "client_phone",
       key: "client_phone",
       render: (text, record) => (
-        <a href={`tel:${record.client_phone}`}>{record.client_phone}</a>
+        <a href={`tel:${record.client_phone}`}>{record.client_phone.replace(/[^a-zа-яё0-9+\s]/gi, "")}</a>
       ),
     },
     {
@@ -71,6 +77,7 @@ const BrigadeApplication = ({applications}) => {
       key: "action",
       render: (text, record) => (
         <div>
+          {/* <Button onClick={() => handleWatch(record)}>Подробнее</Button> */}
           {record.status === "Новая" ? (
             <Button
               type="primary"
@@ -82,9 +89,9 @@ const BrigadeApplication = ({applications}) => {
           ) : (
             <Button 
               type="primary" 
-              disabled={record.finished_by_brigade}
+              disabled={record.finished_by_brigade === true}
               onClick={() => finishApplication(record)}>
-                {record.finished_by_brigade ? "Завершено" : "Завершить"}
+                {record.finished_by_brigade === true ? "Завершено" : "Завершить"}
             </Button>
           )}
         </div>
@@ -93,7 +100,7 @@ const BrigadeApplication = ({applications}) => {
   ];
   return (
     <div>
-      <Table dataSource={applications} columns={columns} rowKey="id" />;
+      <Table dataSource={applications} columns={columns} rowKey="id" />
     </div>
   );
 };

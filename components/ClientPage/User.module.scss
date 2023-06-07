@@ -1,13 +1,20 @@
 @import "../../styles/variables";
 
 .section{
-  padding: 6vh 0;
+  padding: 1vh 0;
 }
 .container{
+  border-top: 1px solid #215700;
   @include container;
+  padding: 2vh 0;
 }
 .content{
-  @include grid-column2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.flex{
+  display: flex;
+  justify-content: space-between;
 }
 .image{
   width: 40%;
@@ -18,4 +25,45 @@
 }
 .btn{
   width: 50%;
+}
+
+@media (max-width: 1700px){
+  .image{
+    width: 40%;
+  }
+}
+
+@media (max-width: 1500px){
+  .image{
+    width: 50%;
+    height: 90%;
+  }
+}
+@media (max-width: 1200px){
+  .image{
+    width: 55%;
+    height: 80%;
+  }
+}
+@media (max-width: 1000px){
+  .image{
+    width: 50%;
+    height: 70%;
+  }
+}
+@media (max-width: 700px){
+  .image{
+    height: 60%;
+  }
+}
+@media (max-width: 600px){
+  .image{
+    width: 40%;
+    height: 100%;
+  }
+  .content{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    justify-content: center;
+  }
 }

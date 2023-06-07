@@ -1,92 +1,83 @@
-import { Button, Form, Input, Modal } from "antd";
-import React, { useEffect, useState } from "react";
-import s from "./Modal.module.scss";
-import { updateProfile } from "@/requests/Profile";
+import React, { useEffect, useState } from 'react';
+import { Modal, Form, Input, Button } from 'antd';
+import { updatePatchProfile, updateProfile, updatePutProfile } from '@/requests/Profile';
 
 const UpdateProfile = ({ open, close, data }) => {
   const [form] = Form.useForm();
-  const [initialData, setInitialData] = useState(data);
-  const [userData, setUserData] = useState([]);
+  const [access, setAccess] = useState(null)
 
   useEffect(() => {
-    const resp = JSON.parse(localStorage.getItem("userInfo"));
-    setUserData(resp);
-  }, []);
-
+    const resp = JSON.parse(localStorage.getItem('userInfo'))
+    setAccess(resp.access)
+  }, [])
   const handleCancel = () => {
     close();
   };
 
   const handleSubmit = (values) => {
-    console.log(values);
-    updateProfile(`/client-profile/edit/`, values,  userData.access)
-    close();
+    const hasEmptyFields = Object.values(values).some((field) => !field)
+    if(hasEmptyFields){
+      updatePatchProfile(`/client-profile/${data.id}/`, values, access, close)
+      form.resetFields();
+    } else{
+      updatePutProfile(`/client-profile/${data.id}/`, values, access, close)
+      form.resetFields();
+    }
   };
 
   if (!open) return null;
   return (
-    <div className={s.modal} onClick={close}>
-  <div className={s.modal__content} onClick={(e) => e.stopPropagation()}>
-    <Modal open={open} onCancel={handleCancel} footer={null}>
-      <Form form={form} initialValues={data} onFinish={handleSubmit}>
-        <Form.Item
-          name="email"
-          label="Почта"
-          rules={[
-            {
-              required: true,
-              message: "Обязательное поле для заполнения",
-            },
-          ]}
-        >
-          <Input value={data.email} onChange={(e) => setInitialData({ ...data, email: e.target.value })} />
-        </Form.Item>
-        <Form.Item
-          name="company_name"
-          label="Название компании"
-          rules={[
-            {
-              required: true,
-              message: "Обязательное поле для заполнения",
-            },
-          ]}
-        >
-          <Input value={data.company_name} onChange={(e) => setInitialData({ ...data, company_name: e.target.value })} />
-        </Form.Item>
-        <Form.Item
-          name="address"
-          label="Адрес"
-          rules={[
-            {
-              required: true,
-              message: "Обязательное поле для заполнения",
-            },
-          ]}
-        >
-          <Input value={data.address} onChange={(e) => setInitialData({ ...data, address: e.target.value })} />
-        </Form.Item>
-        <Form.Item
-          name="phone"
-          label="Номер телефона"
-          rules={[
-            {
-              required: true,
-              message: "Обязательное поле для заполнения",
-            },
-          ]}
-        >
-          <Input value={data.phone} onChange={(e) => setInitialData({ ...data, phone: e.target.value })} />
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary">
-            Изменить
-          </Button>
-        </Form.Item>
-      </Form>
-    </Modal>
-  </div>
-</div>
+    <div className="modal" onClick={close}>
+      <div className="modal__content" onClick={(e) => e.stopPropagation()}>
+        <Modal open={open} onCancel={handleCancel} footer={null}>
+          <Form form={form} onFinish={handleSubmit}>
+            <Form.Item
+              name="email"
+              label="Почта"
+            >
+              <Input type='email' />
+            </Form.Item>
+            <Form.Item
+              name="company_name"
+              label="Название компании"
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="address"
+              label="Адрес"
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="phone"
+              label="Номер телефона"
+              rules={[
+                {
+                  pattern: /^\+[0-9]{12}$/,
+                  message: "Не валидный номер телефона",
+                },
+              ]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item
+              name="password"
+              label="Пароль"
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Изменить
+              </Button>
+            </Form.Item>
+          </Form>
+        </Modal>
+      </div>
+    </div>
   );
 };
 
 export default UpdateProfile;
+
