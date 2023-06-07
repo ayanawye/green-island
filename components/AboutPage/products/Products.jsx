@@ -1,6 +1,11 @@
 import React from "react";
 import Slider from "react-slick";
 import Candle from '../../../assets/images/candle.jpg'
+import Kaif from '../../../assets/images/kaif.jpg'
+import Made1 from '../../../assets/images/made1.jpg'
+import Made2 from '../../../assets/images/made2.png'
+import Made5 from '../../../assets/images/made5.jpg'
+import Table from '../../../assets/images/table.jpg'
 import Image from "next/image";
 import s from './Products.module.scss';
 
@@ -27,19 +32,19 @@ const Products = () => {
           <Image placeholder="blur" className={s.image} src={Candle} alt="candle" />
         </div>
         <div className={s.img}>
-          <Image placeholder="blur" className={s.image} src={Candle} alt="candle" />
+          <Image placeholder="blur" className={s.image} src={Kaif} alt="candle" />
         </div>
         <div className={s.img}>
-          <Image placeholder="blur" className={s.image} src={Candle} alt="candle" />
+          <Image placeholder="blur" className={s.image} src={Made1} alt="candle" />
         </div>
         <div className={s.img}>
-          <Image placeholder="blur" className={s.image} src={Candle} alt="candle" />
+          <Image placeholder="blur" className={s.image} src={Made2} alt="candle" />
         </div>
         <div className={s.img}>
-          <Image placeholder="blur" className={s.image} src={Candle} alt="candle" />
+          <Image placeholder="blur" className={s.image} src={Made5} alt="candle" />
         </div>
         <div className={s.img}>
-          <Image placeholder="blur" className={s.image} src={Candle} alt="candle" />
+          <Image placeholder="blur" className={s.image} src={Table} alt="candle" />
         </div>
       </Slider>
     </section>

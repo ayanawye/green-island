@@ -1,23 +1,33 @@
-import { Table, Typography } from "antd";
-import { useState } from "react";
-import MyBtn from "../ui/button/MyBtn";
+import { Button, Form, Input, Modal, Table, Typography } from "antd";
+import { useEffect, useState } from "react";
+import {
+  changeBrigadeStatus,
+  changeStatus,
+  inProcess,
+} from "@/requests/GetBrigadeList";
+import DetailsModal from "./DitailsModal";
 
 const { Text } = Typography;
 
-const BrigadeApplication = () => {
-  const [applications, setApplication] = useState([
-    { id: 1, comment: "", type: "Вынести мусор", address: "Rekbr, 2/4", call: "0708780274" },
-  ]);
+const BrigadeApplication = ({applications}) => {
+  const [access, setAccess] = useState(null)
+
+  useEffect(() => {
+    const resp = JSON.parse(localStorage.getItem("userInfo"));
+    const access = resp.access
+    setAccess(access)
+  }, []);
+
   const takeApplication = (record) => {
-    message.open({
-      type: "success",
-      content: "Добавили в ваши заявки",
-      style: {
-        marginTop: "5%",
-        fontSize: "20px",
-      },
-    });
+    inProcess(record.id, access)
+    changeBrigadeStatus(record.brigade, {brigade_status: true}, access)
   };
+
+  const finishApplication = (record) => {
+    changeStatus(record.id, {finished_by_brigade: true}, access);
+    changeBrigadeStatus(record.brigade, {brigade_status: false}, access)
+  }
+
   const columns = [
     {
       title: "№",
@@ -40,31 +50,57 @@ const BrigadeApplication = () => {
       key: "type",
     },
     {
-      title: "Адрес",
-      dataIndex: "address",
-      key: "address",
+      title: "Адрес клиента",
+      dataIndex: "client_address",
+      key: "client_address",
+      render: (client_address) => (
+        <Text ellipsis={{ tooltip: client_address }}>
+          {client_address.replace(/[^a-zа-яё0-9+\s]/gi, "")}
+        </Text>
+      ),
     },
     {
       title: "Позвонить",
-      dataIndex: "call",
-      key: "call",
+      dataIndex: "client_phone",
+      key: "client_phone",
       render: (text, record) => (
-        <a href={`tel:${record.call}`}>{record.call}</a>
-      )
+        <a href={`tel:${record.client_phone}`}>{record.client_phone.replace(/[^a-zа-яё0-9+\s]/gi, "")}</a>
+      ),
+    },
+    {
+      title: "Статус",
+      dataIndex: "status",
+      key: "status",
     },
     {
       title: "Действие",
       key: "action",
       render: (text, record) => (
-        <MyBtn type="primary" onClick={() => takeApplication(record)}>
-          Взяться за работу
-        </MyBtn>
+        <div>
+          {/* <Button onClick={() => handleWatch(record)}>Подробнее</Button> */}
+          {record.status === "Новая" ? (
+            <Button
+              type="primary"
+              disabled={record.brigade_status === true}
+              onClick={() => takeApplication(record)}
+            >
+              Взяться за работу
+            </Button>
+          ) : (
+            <Button 
+              type="primary" 
+              disabled={record.finished_by_brigade === true}
+              onClick={() => finishApplication(record)}>
+                {record.finished_by_brigade === true ? "Завершено" : "Завершить"}
+            </Button>
+          )}
+        </div>
       ),
     },
   ];
   return (
     <div>
-      <Table dataSource={applications} columns={columns} rowKey="id" />;
+      <Table dataSource={applications} columns={columns} rowKey="id" />
     </div>
   );
 };

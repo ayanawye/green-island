@@ -2,62 +2,40 @@ import React, { useEffect, useState } from "react";
 import { Table, Modal, Form, Input, Button, Select, Typography } from "antd";
 import MyBtn from "@/components/ui/button/MyBtn";
 import CreateApplication from "../modal/CreateApplication";
-import { getAllApplications } from "@/requests/Applications";
+import { createApplication, myApplications } from "@/requests/Applications";
+import { changeBrigadeStatus, changeStatus } from "@/requests/GetBrigadeList";
+import s from "../User.module.scss";
 
 const { confirm } = Modal;
 const { Option } = Select;
 const { Text } = Typography;
 
 const UserList = () => {
-  const [initialData, setInitialData] = useState([
-    {
-      id: 1,
-      started_create: "05-01-2023",
-      type: "Вывести мусор",
-      status: "на рассмотрении",
-      comment: "Комментарий 1",
-    },
-    {
-      id: 2,
-      date: "05-02-2023",
-      type: "Установить экобокс",
-      status: "в процессе",
-      comment: "Комментарий 2",
-    },
-    {
-      id: 3,
-      date: "05-02-2023",
-      type: "Установить экобокс",
-      status: "finish",
-      comment: "Комментарий 2",
-    },
-  ]);
-  const [data, setData] = useState(initialData);
-  const [userData, setUserData] = useState([])
+  const [data, setData] = useState([]);
+  const [filterData, setDataFilter] = useState([])
+  const [userData, setUserData] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [modal, setModal] = useState(false);
+  const [changeAppStatus, setChandeAppStatus] = useState(false);
+  const [access, setAccess] = useState(null);
   const [form] = Form.useForm();
 
   useEffect(() => {
-    const resp = JSON.parse(localStorage.getItem("userInfo"))
-    const access = resp.access
-    setUserData(resp)
-    getAllApplications("/client/applications/", access, setData)
-  }, [])
+    const resp = JSON.parse(localStorage.getItem("userInfo"));
+    const access = resp.access;
+    setAccess(access);
+    setUserData(resp);
+    myApplications(access, setData);
+  }, [changeAppStatus, modal]);
 
-  const handleDelete = (record) => {
-    confirm({
-      title: "Удалить элемент?",
-      onOk() {
-        const updatedData = data.filter((item) => item.id !== record.id);
-        setData(updatedData);
-        setSelectedItem(null);
-        setModalVisible(false);
-      },
-    });
-  };
-  const handleEdit = (record) => {
+  useEffect(()=>{
+    const newData = data.filter(item => item.finished_by_client !== true)
+    setDataFilter(newData)
+    console.log(newData);
+  }, [data])
+
+  const handleWatch = (record) => {
     setSelectedItem(record);
     setModalVisible(true);
     form.setFieldsValue(record);
@@ -70,9 +48,12 @@ const UserList = () => {
     const updatedData = data.map((item) =>
       item.id === selectedItem.id ? { ...item, ...values } : item
     );
-    setData(updatedData);
     setModalVisible(false);
     form.resetFields();
+  };
+  const finishApplication = (record) => {
+    changeStatus(record.id, { finished_by_client: true }, access);
+    setChandeAppStatus("yes")
   };
 
   const columns = [
@@ -82,7 +63,18 @@ const UserList = () => {
       key: "id",
       render: (_, record, index) => index + 1,
     },
-    { title: "Дата", dataIndex: "date", key: "date" },
+    {
+      title: "Дата",
+      dataIndex: "started_create",
+      key: "started_create",
+      render: (started_create) => (
+        <Text ellipsis={{ tooltip: started_create }}>
+          {started_create.length > 10
+            ? `${started_create.slice(0, 10)}`
+            : started_create}
+        </Text>
+      ),
+    },
     { title: "Тип", dataIndex: "type", key: "type" },
     {
       title: "Комментарий",
@@ -99,55 +91,46 @@ const UserList = () => {
       title: "Действия",
       key: "actions",
       render: (_, record) => (
-        <div>
-          <Button onClick={() => handleEdit(record)}>Подробнее</Button>
+        <div
+          style={{ display: "flex", justifyContent: "center", columnGap: "4%" }}
+        >
+          <Button onClick={() => handleWatch(record)}>Подробнее</Button>
+          <Button
+            disabled={record.finished_by_client === true || record.status !== "В процессе"}
+            type="primary"
+            onClick={() => finishApplication(record)}
+          >
+            {record.finished_by_client === true ? "Выполнено" : "Завершить"}
+          </Button>
         </div>
       ),
     },
   ];
 
   const addApplication = (data) => {
-    setData([data, ...initialData]);
-  };
-  
-  const filterByStatus = (status) => {
-    const filtered = initialData.filter((item) => {
-      if (status === 'Закрытые заявки') {
-        return item.status === 'finish';
-      } else if (status === 'Активные заявки') {
-        return item.status === 'на рассмотрении' || item.status === 'в процессе';
-      }
-      return false;
-    });
-    setData(filtered)
+    createApplication("/client/application/create/", data, userData);
   };
 
   return (
-    <div>
-      <div>
-        <div>
-          <Button onClick={() => filterByStatus("Закрытые заявки")}>
-            Закрытые заявки
-          </Button>
-          <Button onClick={() => filterByStatus("Активные заявки")}>
-            Активные заявки
-          </Button>
+    <div className={s.section}>
+      <div className={s.container}>
+        <div className={s.flex} style={{ marginBottom: "2vh" }}>
+          <div style={{marginLeft: "5%"}}>
+            <p>Активные заявки</p>
+          </div>
+          <div>
+            <Button type="primary" onClick={() => setModal(true)}>
+              Создать новую заявку
+            </Button>
+            <CreateApplication
+              open={modal}
+              close={() => setModal(false)}
+              data={addApplication}
+            />
+          </div>
         </div>
-        <div>
-          <MyBtn onClick={() => setModal(true)}>Создать новую заявку</MyBtn>
-          <CreateApplication
-            open={modal}
-            close={() => setModal(false)}
-            data={addApplication}
-          />
-        </div>
+        <Table dataSource={filterData} columns={columns} rowKey="id" />
       </div>
-      <Table
-        dataSource={data}
-        columns={columns}
-        pagination={false}
-        rowKey="id"
-      />
       <Modal
         open={modalVisible}
         title="Подробности элемента"
@@ -158,18 +141,12 @@ const UserList = () => {
           <Form.Item name="type" label="Тип">
             <Select>
               <Option value="Вывести мусор"></Option>
-              <Option value="Установить экобокс"></Option>
-              <Option value="Демонтировать экобокс"></Option>
+              <Option value="Установка экобокса"></Option>
+              <Option value="Демонтаж экобокса"></Option>
             </Select>
           </Form.Item>
           <Form.Item name="comment" label="Комментарий">
             <Input.TextArea />
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Сохранить
-            </Button>
-            <Button onClick={() => handleDelete(selectedItem)}>Удалить</Button>
           </Form.Item>
         </Form>
       </Modal>

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import BrigadeApplication from '@/components/BrigadePage/BrigadeApplication';
 import { myApplications } from '@/requests/Applications';
 
-const Brigade = () => {
+const Done = () => {
   const [userInfo, setUserInfo] = useState(null)
   const [applications, setApplication] = useState([]);
 
@@ -13,15 +13,15 @@ const Brigade = () => {
     myApplications( access, setApplication);
   }, [])
 
-  const activeApplication = applications.filter(app => app.finished_by_brigade !== true)
+  const filteredApplications = applications.filter(app => app.finished_by_brigade === true)
 
   return (
     <>
     {userInfo
-    ? <BrigadeApplication applications={activeApplication} />
+    ? <BrigadeApplication  applications={filteredApplications} />
     : ""}
     </>
   );
 };
 
-export default Brigade;
+export default Done;

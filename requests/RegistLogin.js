@@ -49,7 +49,7 @@ export const authRequests = async (
 ) => {
   try {
     setLoading(true);
-    const resp = await axios.post(`${BASE_URL}${endpoint}`, bodyObj);
+    const resp = await axios.post(`${BASE_URL}${endpoint}`, bodyObj );
     const data = await resp.data;
     const userType = data.user_type;
     localStorage.setItem("userInfo", JSON.stringify(data));
@@ -66,7 +66,7 @@ export const authRequests = async (
     setLoading(false);
     message.open({
       type: "error",
-      content: `${e.response.data.non_field_errors[0]}`,
+      content: `${e.response.data.non_field_errors}`,
       style: {
         marginTop: "5%",
         fontSize: "20px",

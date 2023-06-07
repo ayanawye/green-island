@@ -25,13 +25,17 @@
   width: 95%;
   margin: 0 auto;
 }
+.img{
+  width: 100%;
+  height: 100%;
+}
 .image{
   @extend .image-size;
 }
 
 @media (max-width: 1400px){
   .title{
-    margin: 1vh 0 2vh;
+    margin: 2vh 0 ;
   }
 }
 @media (max-width: 800px){
@@ -39,7 +43,7 @@
     padding: 5vh 0 8vh;
   }
   .title{
-    margin: 0 0 2vh;
+    margin: 1мр 0 2vh;
   }
   .slider{
     width: 90%;

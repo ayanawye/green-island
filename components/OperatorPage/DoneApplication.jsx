@@ -1,37 +1,26 @@
 import { Table, Button, Typography } from "antd";
-import BrigadeModal from "./BrigadeModal";
 import { useEffect, useState } from "react";
 import s from "./OperatorPage.module.scss";
 import { myApplications } from "@/requests/Applications";
-import { changeStatus, getBrigadeList } from "@/requests/GetBrigadeList";
 
 const { Text } = Typography;
 
-const MyApplications = () => {
+const DoneApplication = () => {
   const [data, setData] = useState([]);
   const [filterData, setDataFilter] = useState([])
-  const [modal, setModal] = useState(false);
-  const [access, setAccess] = useState(null);
-  const [brigade, setBrigade] = useState(null);
-  const [selectedRecord, setSelectedRecord] = useState(null);
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const access = userInfo.access;
-    setAccess(access);
     myApplications(access, setData);
-  }, [modal]);
+  }, []);
 
   useEffect(()=>{
-    const newData = data.filter(item => item.status !== 'Выполнено')
+    const newData = data.filter( (item ) => {
+     return  item.status === 'Выполнено'
+    })
     setDataFilter(newData)
   }, [data])
-
-  const handleOpenModal = (record) => {
-    setSelectedRecord(record.id)
-    getBrigadeList(`/brigades/`, access, setBrigade);
-    setModal(true);
-  };
 
   const columns = [
     {
@@ -82,26 +71,7 @@ const MyApplications = () => {
       title: "Действие",
       key: "action",
       render: (text, record) => (
-        <div>
-          {!record.brigade ? (
-            <Button 
-              onClick={() => handleOpenModal(record)} 
-              type="primary"
-            >
-              Назначить бригаду
-            </Button>
-          ) : (
-            <Button
-              type="primary"
-              disabled={!(record.finished_by_client === true && record.finished_by_brigade === true) || record.status === "Выполнено"}
-              onClick={() => {
-                changeStatus(record.id, {status: "Выполнено", finished_by_operator: true}, access)
-              }}
-            >
-              {record.status === "Выполнено" ? "Выполнено" : "Завершить"}
-            </Button>
-          )}
-        </div>
+        <Button disabled={true}>{record.status}</Button>
       ),
     },
   ];
@@ -114,15 +84,9 @@ const MyApplications = () => {
           columns={columns}
           rowKey="id"
         />
-        <BrigadeModal
-          id={selectedRecord}
-          open={modal}
-          close={() => setModal(!modal)}
-          data={brigade}
-        />
       </div>
     </section>
   );
 };
 
-export default MyApplications;
+export default DoneApplication;

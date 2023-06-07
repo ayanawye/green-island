@@ -123,3 +123,7 @@
 .slick-slide{
   max-width: 500px;
 }
+.ant-form-item-control-input-content > button{
+  display: inline-block;
+  margin-left: 10px;
+}

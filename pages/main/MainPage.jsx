@@ -6,8 +6,9 @@ import Partners from '@/components/AboutPage/partners/Partners';
 import Benefit from '@/components/AboutPage/benefits/Benefit';
 import Products from '@/components/AboutPage/products/Products';
 import Contact from '@/components/AboutPage/contacts/Contact';
-import Link from 'next/link';
 import MyBtn from '@/components/ui/button/MyBtn';
+import { motion } from 'framer-motion';
+import Link from 'next/link';
 
 const MainPage = () => {
   return (
@@ -16,7 +17,7 @@ const MainPage = () => {
         <div className={s.content}>
         <h1>Берегите природу вместе с нами</h1>
         <Link className={s.link} href="/regist">
-          <MyBtn>Cтать частью зеленого города</MyBtn>
+          <MyBtn>Cтать частью зеленого острова</MyBtn>
         </Link>
         </div>
       </div>
