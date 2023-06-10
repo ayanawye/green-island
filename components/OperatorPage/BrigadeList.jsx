@@ -1,10 +1,11 @@
 import { Table } from "antd";
 import React, { useEffect, useState } from "react";
 import s from './OperatorPage.module.scss';
-import { getBrigadeList } from "@/requests/GetBrigadeList";
+import { useSelector } from "react-redux";
 
 const BrigadeList = () => {
-  const [brigades, setBrigades] = useState([]);
+  const brigadeList = useSelector(state => state.brigadeList.brigades)
+  
   const columns = [
     {
       title: "№",
@@ -35,17 +36,10 @@ const BrigadeList = () => {
     },
   ];
 
-
-  useEffect(() => {
-    const resp = JSON.parse(localStorage.getItem('userInfo'))
-    const access = resp.access
-    getBrigadeList(`/brigades/`, access, setBrigades)
-  }, [])
-
   return (
     <section className={s.section}>
       <div className={s.container}>
-        <Table className={s.table} dataSource={brigades} columns={columns} rowKey="id" />
+        <Table className={s.table} dataSource={brigadeList} columns={columns} rowKey="id" />
       </div>
     </section>
   );

@@ -2,21 +2,22 @@ import { Table, Button, Typography } from "antd";
 import { useEffect, useState } from "react";
 import s from "./OperatorPage.module.scss";
 import { myApplications } from "@/requests/Applications";
+import { useSelector } from "react-redux";
 
 const { Text } = Typography;
 
 const DoneApplication = () => {
   const [data, setData] = useState([]);
   const [filterData, setDataFilter] = useState([])
+  const {myApplications} = useSelector(state => state.myApplications)
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const access = userInfo.access;
-    myApplications(access, setData);
   }, []);
 
   useEffect(()=>{
-    const newData = data.filter( (item ) => {
+    const newData = myApplications.filter( (item ) => {
      return  item.status === 'Выполнено'
     })
     setDataFilter(newData)

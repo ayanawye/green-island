@@ -1,13 +1,17 @@
 import { Form, Input, Select, Button, Modal } from "antd";
 import s from "./Modal.module.scss";
-import { createApplication } from "@/requests/Applications";
+// import { createApplication } from "@/requests/Applications";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { addApplication, createApplication } from "@/store/reducers/myApplications";
 
 const { Option } = Select;
 
 const CreateApplication = ({ close, open }) => {
   const [form] = Form.useForm();
-  const [userData, setUserData] = useState([])
+  const [access, setAccess] = useState([])
+  const dispatch = useDispatch()
+
   const handleModalClose = () => {
     form.resetFields();
     close();
@@ -15,12 +19,13 @@ const CreateApplication = ({ close, open }) => {
   useEffect(() => {
     const resp = JSON.parse(localStorage.getItem("userInfo"))
     const access = resp.access
-    setUserData(access)
+    setAccess(access)
   }, [])
 
   const handleModalCreate = (values) => {
-    createApplication(`/client/application/create/`, values, userData, close)
-    form.resetFields();
+    dispatch(createApplication({access, values}))
+    close()
+    form.resetFields()
   };
 
   if (!open) return null;

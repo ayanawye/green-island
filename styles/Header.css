@@ -127,3 +127,6 @@
   display: inline-block;
   margin-left: 10px;
 }
+.ant-modal-close{
+  top: 0;
+}

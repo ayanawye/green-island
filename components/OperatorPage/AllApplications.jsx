@@ -1,24 +1,24 @@
 import { Button, Table, Typography, message } from "antd";
 import { useEffect, useState } from "react";
-import MyBtn from "../ui/button/MyBtn";
 import { assignApplication, getAllApplications } from "@/requests/Applications";
 import s from './OperatorPage.module.scss';
-
+import { useSelector } from "react-redux";
 
 const { Text } = Typography;
-const AllApplications = () => {
-  const [applications, setApplication] = useState([]);
-  const [access, setAccess] = useState(null)
 
+const AllApplications = () => {
+  const [allApplications, setApplication] = useState([])
+  const [access, setAccess] = useState(null)
+  const {applications} = useSelector(state => state.applications)
+  
   useEffect(() => {
     const resp = JSON.parse(localStorage.getItem("userInfo"));
     const access = resp.access;
     setAccess(access)
-    getAllApplications(`/all_applications/`, access, setApplication);
   }, []);
 
   const takeApplication = (record) => {
-    assignApplication(`/operator/${record.id}/my_applications/`, access, record, setApplication, applications)
+    assignApplication(`/operator/${record.id}/my_applications/`, access, record, setApplication, allApplications)
   };
 
   const columns = [

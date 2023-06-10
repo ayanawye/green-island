@@ -4,28 +4,29 @@ import { useEffect, useState } from "react";
 import s from "./OperatorPage.module.scss";
 import { myApplications } from "@/requests/Applications";
 import { changeStatus, getBrigadeList } from "@/requests/GetBrigadeList";
+import { useSelector } from "react-redux";
 
 const { Text } = Typography;
 
 const MyApplications = () => {
-  const [data, setData] = useState([]);
   const [filterData, setDataFilter] = useState([])
   const [modal, setModal] = useState(false);
   const [access, setAccess] = useState(null);
   const [brigade, setBrigade] = useState(null);
+  const [changeButton, setChangeButton] = useState(false)
   const [selectedRecord, setSelectedRecord] = useState(null);
+  const {myApplications} = useSelector(state => state.myApplications)
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const access = userInfo.access;
     setAccess(access);
-    myApplications(access, setData);
   }, [modal]);
 
   useEffect(()=>{
-    const newData = data.filter(item => item.status !== 'Выполнено')
+    const newData = myApplications.filter(item => item.status !== 'Выполнено')
     setDataFilter(newData)
-  }, [data])
+  }, [myApplications, changeButton])
 
   const handleOpenModal = (record) => {
     setSelectedRecord(record.id)
@@ -96,9 +97,10 @@ const MyApplications = () => {
               disabled={!(record.finished_by_client === true && record.finished_by_brigade === true) || record.status === "Выполнено"}
               onClick={() => {
                 changeStatus(record.id, {status: "Выполнено", finished_by_operator: true}, access)
+                setChangeButton(true)
               }}
             >
-              {record.status === "Выполнено" ? "Выполнено" : "Завершить"}
+              {record.finished_by_operator === true ? "Выполнено" : "Завершить"}
             </Button>
           )}
         </div>

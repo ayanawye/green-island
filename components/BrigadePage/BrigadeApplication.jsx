@@ -6,27 +6,39 @@ import {
   inProcess,
 } from "@/requests/GetBrigadeList";
 import DetailsModal from "./DitailsModal";
+import s from '../ClientPage/User.module.scss';
 
 const { Text } = Typography;
 
-const BrigadeApplication = ({applications}) => {
-  const [access, setAccess] = useState(null)
+const BrigadeApplication = ({ applications }) => {
+  const [access, setAccess] = useState(null);
+  const [detailsVisible, setDetailsVisible] = useState(false);
+  const [selectedApplication, setSelectedApplication] = useState(null);
 
   useEffect(() => {
     const resp = JSON.parse(localStorage.getItem("userInfo"));
-    const access = resp.access
-    setAccess(access)
+    const access = resp.access;
+    setAccess(access);
   }, []);
 
+  const handleWatch = (record) => {
+    setSelectedApplication(record);
+    setDetailsVisible(true);
+  };
+
+  const handleDetailsClose = () => {
+    setDetailsVisible(false);
+  };
+
   const takeApplication = (record) => {
-    inProcess(record.id, access)
-    changeBrigadeStatus(record.brigade, {brigade_status: true}, access)
+    inProcess(record.id, access);
+    changeBrigadeStatus(record.brigade, { brigade_status: true }, access);
   };
 
   const finishApplication = (record) => {
-    changeStatus(record.id, {finished_by_brigade: true}, access);
-    changeBrigadeStatus(record.brigade, {brigade_status: false}, access)
-  }
+    changeStatus(record.id, { finished_by_brigade: true }, access);
+    changeBrigadeStatus(record.brigade, { brigade_status: false }, access);
+  };
 
   const columns = [
     {
@@ -64,7 +76,9 @@ const BrigadeApplication = ({applications}) => {
       dataIndex: "client_phone",
       key: "client_phone",
       render: (text, record) => (
-        <a href={`tel:${record.client_phone}`}>{record.client_phone.replace(/[^a-zа-яё0-9+\s]/gi, "")}</a>
+        <a href={`tel:${record.client_phone}`}>
+          {record.client_phone.replace(/[^a-zа-яё0-9+\s]/gi, "")}
+        </a>
       ),
     },
     {
@@ -76,8 +90,8 @@ const BrigadeApplication = ({applications}) => {
       title: "Действие",
       key: "action",
       render: (text, record) => (
-        <div>
-          {/* <Button onClick={() => handleWatch(record)}>Подробнее</Button> */}
+        <div className={s.flex}>
+          <Button onClick={() => handleWatch(record)}>Подробнее</Button>
           {record.status === "Новая" ? (
             <Button
               type="primary"
@@ -87,11 +101,12 @@ const BrigadeApplication = ({applications}) => {
               Взяться за работу
             </Button>
           ) : (
-            <Button 
-              type="primary" 
+            <Button
+              type="primary"
               disabled={record.finished_by_brigade === true}
-              onClick={() => finishApplication(record)}>
-                {record.finished_by_brigade === true ? "Завершено" : "Завершить"}
+              onClick={() => finishApplication(record)}
+            >
+              {record.finished_by_brigade === true ? "Завершено" : "Завершить"}
             </Button>
           )}
         </div>
@@ -99,8 +114,15 @@ const BrigadeApplication = ({applications}) => {
     },
   ];
   return (
-    <div>
-      <Table dataSource={applications} columns={columns} rowKey="id" />
+    <div className={s.section}>
+      <div className={s.container}>
+        <Table dataSource={applications} columns={columns} rowKey="id" />
+        <DetailsModal
+          application={selectedApplication}
+          visible={detailsVisible}
+          onClose={handleDetailsClose}
+        />
+      </div>
     </div>
   );
 };

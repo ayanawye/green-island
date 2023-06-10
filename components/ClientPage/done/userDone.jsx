@@ -3,26 +3,21 @@ import { useEffect, useState } from "react";
 // import s from '../../components/OperatorPage/OperatorPage.module.scss';
 import s from '../User.module.scss';
 import { myApplications } from "@/requests/Applications";
+import { useSelector } from "react-redux";
 
 const { Text } = Typography;
 
 const UserDone = () => {
-  const [data, setData] = useState([]);
+  const {myApplications} = useSelector(state => state.myApplications)
   const [filterData, setDataFilter] = useState([])
 
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    const access = userInfo.access;
-    myApplications(access, setData);
-  }, []);
-
   useEffect(()=>{
-    const newData = data.filter( (item ) => {
+    const newData = myApplications.filter( (item ) => {
      return item.finished_by_client === true
     })
     console.log(newData);
     setDataFilter(newData)
-  }, [data])
+  }, [myApplications])
 
   const columns = [
     {

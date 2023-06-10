@@ -2,19 +2,6 @@ import { BASE_URL } from "@/base_url/BASE_URL";
 import { message } from "antd";
 import axios from "axios";
 
-export const getAllApplications = async (endpoint, token, setApplication) => {
-  try{
-    const resp = await axios.get(`${BASE_URL}${endpoint}`, {headers:
-      {"Authorization": `Bearer ${token}`}
-    })
-    const data = await resp.data
-    setApplication(data)
-  }
-  catch(e) {
-    console.log(e.response.data);
-  }
-}
-
 export const createApplication = async (endpoint, bodyObj, token, close) => {
   try{
     const resp = await axios.post(`${BASE_URL}${endpoint}`, bodyObj, {
@@ -26,20 +13,6 @@ export const createApplication = async (endpoint, bodyObj, token, close) => {
   }
   catch(e){
     console.log(e.response.data);
-  }
-}
-
-export const myApplications = async (token, setData) => {
-  try{
-    const resp = await axios.get(`${BASE_URL}/applications/`, {headers:
-      {"Authorization": `Bearer ${token}`}
-    })
-    const data = await resp.data
-    setData(data)
-    console.log(data);
-  }
-  catch(e) {
-    console.log(e.response);
   }
 }
 

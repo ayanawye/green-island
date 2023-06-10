@@ -1,24 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import BrigadeApplication from '@/components/BrigadePage/BrigadeApplication';
-import { myApplications } from '@/requests/Applications';
+import { useSelector } from 'react-redux';
 
 const Brigade = () => {
   const [userInfo, setUserInfo] = useState(null)
-  const [applications, setApplication] = useState([]);
+  const {myApplications} = useSelector(state => state.myApplications)
 
   useEffect(() => {
     const resp = JSON.parse(localStorage.getItem("userInfo"))
     setUserInfo(resp)
-    const access = resp.access;
-    myApplications( access, setApplication);
   }, [])
 
-  const activeApplication = applications.filter(app => app.finished_by_brigade !== true)
+  const activeApplication = myApplications.filter(app => app.finished_by_brigade !== true)
 
   return (
     <>
     {userInfo
-    ? <BrigadeApplication applications={activeApplication} />
+    ? <BrigadeApplication applications={activeApplication}/>
     : ""}
     </>
   );
